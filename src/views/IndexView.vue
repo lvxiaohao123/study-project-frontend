@@ -4,6 +4,7 @@
   </div>
   <div>
       <el-button @click="logout()" type="danger" plain>退出登录</el-button>
+      <a href="/about">about</a>
   </div>
 </template>
 <script setup>
