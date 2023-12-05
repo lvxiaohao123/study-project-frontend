@@ -47,8 +47,6 @@ import router from "@/router";
 import {useStore} from "@/stores";
 import axios from 'axios';
 
-
-
 const store = useStore()
 
 const form = reactive({
@@ -56,60 +54,6 @@ const form = reactive({
     password: '',
     remember: false
 })
-
-// const login = () => {
-//     if(!form.username || !form.password) {
-//         ElMessage.warning('请填写用户名和密码！')
-//     } else {
-//         post('http://localhost:8080/user/log', {
-//             username: form.username,
-//             password: form.password,
-//             // remember: form.remember
-        
-//         }, (message) => {
-//             ElMessage.success(message)
-//             get('http://localhost:8080/user/log', (message) => {
-//                 store.auth.user = message
-//                 router.push('/index')
-//             }, () => {
-//                 store.auth.user = null
-//             })
-//         })
-//     }
-// }
-
-
-//66
-// const login = () => {
-//     if (!form.username || !form.password) {
-//         ElMessage.warning('请填写用户名和密码！');
-//     } else {
-//         const requestData = {
-//             username: form.username,
-//             password: form.password,
-//         };
-
-//         axios.post('http://localhost:8080/user/log', requestData)
-//             .then((response) => {
-//                 console.log(response);
-//                 if (response.data === true) {
-//                     router.push('/index');
-//                     router.push('src/views/IndexView.vue')
-//                     ElMessage.success(response.data);
-//                     store.auth.user = response.data.user; // 存储用户信息
-                    
-//                 } else {
-//                     ElMessage.error(response.data);
-//                     store.auth.user = null;
-//                 }
-//             })
-//             .catch((error) => {
-//                 ElMessage.error('登录失败：' + error);
-//                 store.auth.user = null;
-//             });
-//     }
-// };
-
 const login = () => {
     if (!form.username || !form.password) {
         ElMessage.warning('请填写用户名和密码！');
@@ -119,7 +63,7 @@ const login = () => {
             password: form.password,
         };
 
-        axios.post('http://localhost:8080/api/auth/log', requestData)
+        axios.post('http://localhost:8088/api/login', requestData)
             .then((response) => {
                 console.log(response);
                 if (response.data) {
@@ -141,58 +85,6 @@ const login = () => {
             });
     }
 };
-
-
-
-
-
-// const login = () => {
-//     if (!form.username || !form.password) {
-//         ElMessage.warning('请填写用户名和密码！');
-//     } else {
-//         const requestData = {
-//             username: form.username,
-//             password: form.password
-//         };
-
-//         // 发送POST请求给后端
-//         post('http://localhost:8888/user/log', (response) => {
-//             if (response.status === 0) {
-//                 ElMessage.success('登录成功');
-//                 // 假设服务器返回了用户数据，你可以存储它在前端
-//                 store.auth.user = response.user;
-//                 router.push('/index');
-//             } else {
-//                 ElMessage.error('登录失败');
-//                 store.auth.user = null;
-//             }
-//         });
-//     }
-// };
-
-
-
-
-// const login = () => {
-//     if (!form.username || !form.password) {
-//         ElMessage.warning('请填写用户名和密码！');
-//     } else {
-//         post('http://localhost:8888/user/log', {
-//             username: form.username,
-//             password: form.password,
-//             // remember: form.remember,
-//         }, (response) => {
-//             if (response.status === 0) {
-//                 ElMessage.error('登录失败'); // 登录失败
-//             } else if (response.status === 1) {
-//                 ElMessage.success('登录成功'); // 登录成功
-//                 router.push('/index'); // 重定向到'/index'页面
-//             } else {
-//                 ElMessage.error('未知错误'); // 其他情况，可能需要进一步处理
-//             }
-//         });
-//     }
-// }
 
 </script>
 

@@ -69,13 +69,13 @@ import router from "@/router";
 import {reactive, ref} from "vue";
 import {ElMessage} from "element-plus";
 import {post} from "@/net";
+import axios from 'axios';
 
 const form = reactive({
     username: '',
     password: '',
     password_repeat: '',
-    email: '',
-    code: ''
+    email: ''
 })
 
 const validateUsername = (rule, value, callback) => {
@@ -131,33 +131,32 @@ const onValidate = (prop, isValid) => {
 const register = () => {
     formRef.value.validate((isValid) => {
         if(isValid) {
-            post('/user/insert', {
-                username: form.username,
-                password: form.password,
-                email: form.email,
-                // code: form.code
-            }, (message) => {
-                ElMessage.success(message)
-                router.push("/")
+            const requestData = {
+            username: form.username,
+            password: form.password,
+            email:form.email
+        }    
+
+            axios.post('http://localhost:8088/api/register', requestData)
+            .then((response) => {
+                console.log(response);
+                if (response.data) {
+                    // 注册成功
+                    ElMessage.success('注册成功');
+                    router.push('/index');
+                } else {
+                    // 登录失败
+                    ElMessage.error('注册失败');
+                }
             })
+            .catch((error) => {
+                ElMessage.error('用户名已存在');
+            });
         } else {
             ElMessage.warning('请完整填写注册表单内容！')
         }
     })
 }
-
-// const validateEmail = () => {
-//     coldTime.value = 60
-//     post('/api/auth/valid-register-email', {
-//         email: form.email
-//     }, (message) => {
-//         ElMessage.success(message)
-//         setInterval(() => coldTime.value--, 1000)
-//     }, (message) => {
-//         ElMessage.warning(message)
-//         coldTime.value = 0
-//     })
-// }
 </script>
 
 <style scoped>
