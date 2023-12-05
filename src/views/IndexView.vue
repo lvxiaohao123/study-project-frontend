@@ -4,7 +4,8 @@
   </div>
   <div>
       <el-button @click="logout()" type="danger" plain>退出登录</el-button>
-      <a href="/about">about</a>
+      <el-button @click="toAbout()" type="danger" plain>about</el-button>
+      
   </div>
 </template>
 <script setup>
@@ -35,4 +36,7 @@ const logout = () => {
             });
     
 };
+function toAbout(){
+    router.push('/about');
+}
 </script>

@@ -64,25 +64,26 @@ const login = () => {
         };
 
         axios.post('http://localhost:8088/api/login', requestData)
-            .then((response) => {
-                console.log(response);
-                if (response.data) {
-                    // 登录成功
-                    router.push('/index');
-                    ElMessage.success('登录成功');
-                    
-                    // 存储用户信息
-                    store.auth.user = response.data;
-                } else {
-                    // 登录失败
-                    ElMessage.error('登录失败');
-                    store.auth.user = null;
-                }
-            })
-            .catch((error) => {
-                ElMessage.error('登录失败：' + error);
-                store.auth.user = null;
-            });
+  .then((response) => {
+    console.log(response);
+    if (response.data) {
+      // 存储用户信息
+      store.auth.user = response.data;
+
+      // 登录成功后再跳转
+      router.push('/index');
+      ElMessage.success('登录成功');
+    } else {
+      // 登录失败
+      ElMessage.error('登录失败');
+      store.auth.user = null;
+    }
+  })
+  .catch((error) => {
+    ElMessage.error('登录失败：' + error);
+    store.auth.user = null;
+  });
+
     }
 };
 
