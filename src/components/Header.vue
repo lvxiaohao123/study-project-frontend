@@ -21,11 +21,20 @@
             <div class="avatar-container">
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
                 <a href="#">{{store.auth.user ? store.auth.user.username : ''}}</a>
+                <el-dropdown trigger="click">
+                    <span class="el-dropdown-link">
+                    用户中心<el-icon class="el-icon--right"><arrow-down /></el-icon>
+                    </span>
+                    <template #dropdown>
+                    <el-dropdown-menu>
+                        <el-dropdown-item ><el-icon><House /></el-icon>个人中心</el-dropdown-item>
+                        <el-dropdown-item ><el-icon><Discount /></el-icon>订单</el-dropdown-item>
+                        <el-dropdown-item ><el-icon><Plus /></el-icon>发布商品</el-dropdown-item>
+                        <el-dropdown-item @click="logout()" type="danger" plain class="logout"><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
+                    </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
              </div>
-
-            <div>
-                <el-button @click="logout()" type="danger" plain>退出登录</el-button>
-            </div>
         </header>
 
         <!-- 页面内容 -->
@@ -39,6 +48,15 @@ import {get} from "@/net";
 import {ElMessage} from "element-plus";
 import router from "@/router";
 import {useStore} from "@/stores";
+import {
+  ArrowDown,
+  Check,
+  CircleCheck,
+  CirclePlus,
+  CirclePlusFilled,
+  Plus,
+} from '@element-plus/icons-vue'
+
 const store = useStore()
 
 
@@ -114,4 +132,8 @@ div a {
     align-items: center; /* 垂直居中 */
     gap: 20px; /* 间距大小，根据需要调整 */
   }
+
+.logout {
+    color: brown;
+}
 </style>
