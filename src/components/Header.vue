@@ -7,8 +7,8 @@
 
             <!-- 搜索框 -->
             <div class="search-bar">
-                <input type="text" placeholder="Search" />
-                <button @click="search">搜索</button>
+                <el-input v-model="input" placeholder="" />
+                <el-button type="primary"><el-icon><Search /></el-icon>搜索</el-button>
             </div>
 
             <!-- 导航选项 -->
@@ -28,7 +28,6 @@
                     <template #dropdown>
                     <el-dropdown-menu>
                         <el-dropdown-item ><el-icon><House /></el-icon>个人中心</el-dropdown-item>
-                        <el-dropdown-item ><el-icon><Discount /></el-icon>订单</el-dropdown-item>
                         <el-dropdown-item ><el-icon><Plus /></el-icon>发布商品</el-dropdown-item>
                         <el-dropdown-item @click="logout()" type="danger" plain class="logout"><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
                     </el-dropdown-menu>
@@ -48,6 +47,15 @@ import {get} from "@/net";
 import {ElMessage} from "element-plus";
 import router from "@/router";
 import {useStore} from "@/stores";
+import { ref } from 'vue'
+const input = ref('')
+import {
+  Delete,
+  Edit,
+  Message,
+  Search,
+  Star,
+} from '@element-plus/icons-vue'
 import {
   ArrowDown,
   Check,

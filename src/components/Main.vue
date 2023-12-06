@@ -2,7 +2,7 @@
   <div class="profile-container">
     
     <div class="profile-section">
-      <h2>Your Products</h2>
+      <h2>科普小知识</h2>
       <ul class="product-list">
         <li v-for="product in products" :key="product.id" class="product-item">
           <div class="product-image">

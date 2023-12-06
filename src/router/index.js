@@ -27,6 +27,22 @@ const router = createRouter({
       path: '/index',
       name: 'index',
       component: () => import('@/views/IndexView.vue')
+    }, {
+      path: '/Admin',
+      name: 'Admin',
+      component: () => import('@/views/AdminView.vue')
+    }, {
+      path: '/Forum',
+      name: 'Forum',
+      component: () => import('@/views/ForumView.vue')
+    }, {
+      path: '/Shop',
+      name: 'Shop',
+      component: () => import('@/views/IShopView.vue')
+    }, {
+      path: '/Home',
+      name: 'Home',
+      component: () => import('@/views/UserHome.vue')
     }
   ]
 })
