@@ -3,7 +3,7 @@
         <!-- 顶部导航栏 -->
         <header>
             <!-- Logo -->
-            <div class="logo">医疗复健综合云平台</div>
+            <div class="logo">复健设备综合云平台</div>
 
             <!-- 搜索框 -->
             <div class="search-bar">
@@ -20,7 +20,7 @@
 
             <div class="avatar-container">
                 <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>
-                <p>{{store.auth.user ? store.auth.user.username : ''}}</p>
+                <a href="#">{{store.auth.user ? store.auth.user.username : ''}}</a>
              </div>
 
             <div>
@@ -89,6 +89,10 @@ nav {
 nav a {
     margin-right: 15px;
     color: white;
+    text-decoration: none;
+}
+
+div a {
     text-decoration: none;
 }
 

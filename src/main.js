@@ -9,14 +9,14 @@ import axios from "axios";
 import Header from './components/Header.vue'
 import Banner from './components/Banner.vue'
 import Footer from './components/Footer.vue'
-
+import Main from './components/Main.vue'
 
 const app = createApp(App)
 
 app.component('Header',Header)
 app.component('Banner',Banner)
 app.component('Footer',Footer)
-
+app.component('Main',Main)
 
 axios.defaults.baseURL = 'http://localhost:8088'
 

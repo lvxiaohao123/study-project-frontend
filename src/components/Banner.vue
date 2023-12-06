@@ -1,10 +1,10 @@
 <template>
     <div class="block text-center">
-      <el-carousel height="250px">
+      <el-carousel height="350px">
         <!-- Use v-for to loop through an array of image URLs -->
         <el-carousel-item v-for="(item, index) in imageList" :key="index">
           <!-- Use the img tag to display the image -->
-          <img :src="item" alt="Carousel Image" style="width: 100%; height: 100%;">
+          <img :src="item" alt="Carousel Image" style="width: 100%; height:auto;">
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -16,9 +16,9 @@
       return {
         // Array of image URLs
         imageList: [
-          'https://example.com/image1.jpg',
-          'https://example.com/image2.jpg',
-          'https://example.com/image3.jpg',
+          'src/img/wheelchair-749985_1920.jpg',
+          'src/img/wheelchair-749985_1920.jpg',
+          'src/img/wheelchair-749985_1920.jpg',
           // Add more image URLs as needed
         ],
       };
