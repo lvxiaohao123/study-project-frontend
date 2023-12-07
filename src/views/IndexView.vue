@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
   <div>
     欢迎{{store.auth.user ? store.auth.user.username : ''}}进入到学习平台
@@ -39,4 +40,14 @@ const logout = () => {
 function toAbout(){
     router.push('/about');
 }
+=======
+<template>
+    <Header></Header>
+    <Banner></Banner>
+    <Main></Main>
+    <Footer></Footer>
+</template>
+<script setup>
+
+>>>>>>> 7c1193a199751c6d0cf41735b5158d7a66f6124a
 </script>
