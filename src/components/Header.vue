@@ -14,7 +14,7 @@
             <!-- 导航选项 -->
             <nav>
                 <router-link to="/">首页</router-link>
-                <router-link to="/about">商城</router-link>
+                <router-link to="/Shop">商城</router-link>
                 <router-link to="/contact">论坛</router-link>
             </nav>
 
@@ -27,7 +27,7 @@
                     </span>
                     <template #dropdown>
                     <el-dropdown-menu>
-                        <el-dropdown-item ><el-icon><House /></el-icon>个人中心</el-dropdown-item>
+                        <el-dropdown-item @click="toAbout()"><el-icon><House /></el-icon>个人中心</el-dropdown-item>
                         <el-dropdown-item ><el-icon><Plus /></el-icon>发布商品</el-dropdown-item>
                         <el-dropdown-item @click="logout()" type="danger" plain class="logout"><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
                     </el-dropdown-menu>
@@ -67,7 +67,9 @@ import {
 
 const store = useStore()
 
-
+function toAbout(){
+    router.push('/about');
+}
 
 const logout = () => {
 

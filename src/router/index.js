@@ -38,7 +38,7 @@ const router = createRouter({
     }, {
       path: '/Shop',
       name: 'Shop',
-      component: () => import('@/views/IShopView.vue')
+      component: () => import('@/views/ShopView.vue')
     }, {
       path: '/Home',
       name: 'Home',
@@ -47,6 +47,16 @@ const router = createRouter({
       path: '/News',
       name: 'News',
       component: () => import('@/views/NewsView.vue')
+    },{
+      path: '/about',
+      name: 'about',
+      component: () => import('@/views/AboutUser.vue')
+    }
+    ,{
+      path: '/news/:id',
+      name: 'NewsDetail',
+      component: () => import('@/views/NewsDetail.vue'), // 替换成你的实际组件路径
+      props: true // 将路由参数作为组件的 props 传递
     }
   ]
 })

@@ -2,46 +2,60 @@
   <div class="profile-container">
     <div class="profile-section">
       <h2 class="section-title">科普小知识</h2>
+      <h3 class="to-More" @click="toMoreNews()">更多新闻>>></h3>
       <ul class="news-list">
-        <li v-for="newsItem in news" :key="newsItem.id" class="news-item">
+        <li v-for="(newsItem) in news.slice(0, 6)" :key="newsItem.id" class="news-item" @click="goToNewsDetail(newsItem.id)">
           <div class="news-image">
             <img :src="newsItem.image_path" alt="News Image">
             <h3 style="margin: 0;">{{ newsItem.title }}</h3>
             <p class="date">{{ newsItem.create_date }}</p>
           </div>
         </li>
+        
       </ul>
     </div>
   </div>
 </template>
 
-
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { ElMessage } from "element-plus";
-import {useStore} from "@/stores";
+import { useStore } from "@/stores";
 import router from "@/router";
 
 const store = useStore();
-  const news = ref([]);
-  
-  const fetchProductData = async () => {
-    try {
-      const response = await axios.get('/api/findAllNews');
-      news.value = response.data;
-    } catch (error) {
-      console.error('Error fetching news data:', error);
-      ElMessage.error('Failed to fetch news data');
-    }
-  };
-  
-  onMounted(() => {
-    fetchProductData();
-  });
+const news = ref([]);
+
+const fetchNewsData = async () => {
+  try {
+    const response = await axios.get('/api/findAllNews');
+    news.value = response.data;
+  } catch (error) {
+    console.error('Error fetching news data:', error);
+    ElMessage.error('Failed to fetch news data');
+  }
+};
+
+const goToNewsDetail = (newsId) => {
+  router.push(`/news/${newsId}`);
+};
+
+onMounted(() => {
+  fetchNewsData();
+});
+
+function toMoreNews(){
+  router.push('/News');
+}
 </script>
 
+
 <style scoped>
+  .to-More{
+    cursor: pointer;
+    float: right;
+}
   .profile-container {
     max-width: 100vw;
     margin: 0 auto;
@@ -70,6 +84,7 @@ const store = useStore();
   }
 
   .news-item {
+    cursor: pointer;
     width: 300px; /* 设置固定宽度 */
     border: 1px solid #ddd;
     margin-left: 50px;
