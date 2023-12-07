@@ -7,7 +7,7 @@
           <div class="news-image">
             <img :src="newsItem.image_path" alt="News Image">
             <h3 style="margin: 0;">{{ newsItem.title }}</h3>
-            <p class="date">{{ newsItem.create_date }}</p>
+            <p class="date">{{ formatNewsDate(newsItem.create_date) }}</p>
           </div>
         </li>
       </ul>
@@ -26,6 +26,11 @@ import router from "@/router";
 const store = useStore();
   const news = ref([]);
   
+  const formatNewsDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString(); // 只返回年月日部分
+};
+
   const fetchProductData = async () => {
     try {
       const response = await axios.get('/api/findAllNews');
