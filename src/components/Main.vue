@@ -7,7 +7,7 @@
           <div class="news-image">
             <img :src="newsItem.image_path" alt="News Image">
             <h3 style="margin: 0;">{{ newsItem.title }}</h3>
-            <p class="date">{{ newsItem.date }}</p>
+            <p class="date">{{ newsItem.create_date }}</p>
           </div>
         </li>
       </ul>
