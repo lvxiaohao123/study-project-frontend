@@ -10,6 +10,9 @@
             <h3 style="margin: 0;">{{ postItem.title }}</h3>
             <p class="date">{{ formatPostDate(postItem.create_date) }}</p>
           </div>
+          <div>
+            <p class="date">{{postItem.content}}</p>
+          </div>
         </li>
       </ul>
     </div>
