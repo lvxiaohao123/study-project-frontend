@@ -9,10 +9,11 @@
       </li>
     </ul>
 
-    <div v-if="selectedNews">
-      <h2>{{ selectedNews.title }}</h2>
-      <p>{{ selectedNews.content }}</p>
-      <p>日期: {{ selectedNews.date }}</p>
+    <div v-if="newsItem">
+      <h2>{{ newsItem.title }}</h2>
+      <p>日期: {{ newsItem.author }}</p>
+      <p>日期: {{ newsItem.create_date }}</p>
+      <p>{{ newsItem.content }}</p>
       <button @click="goBack">返回</button>
     </div>
   </div>

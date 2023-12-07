@@ -8,7 +8,8 @@
           <div class="news-image">
             <img :src="newsItem.image_path" alt="News Image">
             <h3 style="margin: 0;">{{ newsItem.title }}</h3>
-            <p class="date">{{ newsItem.create_date }}</p>
+            <p class="date">{{ formatDate(newsItem.create_date) }}</p>
+
           </div>
         </li>
         
@@ -35,6 +36,10 @@ const fetchNewsData = async () => {
     console.error('Error fetching news data:', error);
     ElMessage.error('Failed to fetch news data');
   }
+};
+const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString(); // 只返回年月日部分
 };
 
 const goToNewsDetail = (newsId) => {
@@ -85,7 +90,7 @@ function toMoreNews(){
 
   .news-item {
     cursor: pointer;
-    width: 300px; /* 设置固定宽度 */
+    width: 26.5%; /* 设置固定宽度 */
     border: 1px solid #ddd;
     margin-left: 50px;
     margin-right: 50px;

@@ -15,7 +15,7 @@
             <nav>
                 <router-link to="/">首页</router-link>
                 <router-link to="/Shop">商城</router-link>
-                <router-link to="/contact">论坛</router-link>
+                <router-link to="/Forum">论坛</router-link>
             </nav>
 
             <div class="avatar-container">

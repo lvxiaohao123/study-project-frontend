@@ -2,7 +2,8 @@
     <div v-if="selectedNews" class="news-detail-container">
       <h2>{{ selectedNews.title }}</h2>
       <p>{{ selectedNews.content }}</p>
-      <p>日期: {{ selectedNews.create_date }}</p>
+      <p>日期: {{ formatDate(selectedNews.create_date )}}</p>
+      <!-- <p class="date">{{ formatNewsDate(newsItem.create_date) }}</p> -->
       <button @click="goBack">返回</button>
     </div>
     <div v-else>
@@ -17,7 +18,10 @@
   import router from '@/router';
   
   const selectedNews = ref(null);
-  
+  const formatDate = (timestamp) => {
+  const date = new Date(timestamp);
+  return date.toLocaleDateString(); // 只返回年月日部分
+};
   const fetchNewsDetail = async () => {
     const newsId = router.currentRoute.value.params.id;
   
@@ -38,6 +42,8 @@
     fetchNewsDetail();
   });
   </script>
+  
+
   
   <style scoped>
   /* 样式可以根据你的需求进行调整 */

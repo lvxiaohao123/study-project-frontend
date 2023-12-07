@@ -59,7 +59,7 @@ const login = () => {
         ElMessage.warning('请填写用户名和密码！');
     } else {
         const requestData = {
-            username: form.username,
+            username : form.username,
             password: form.password,
         };
 
