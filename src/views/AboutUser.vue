@@ -1,105 +1,105 @@
 <template>
-    <div class="profile-container">
-      <div class="profile-header">
-        <h1>Welcome, {{ store.auth.user.username }}!</h1>
-        <el-button @click="logout" type="danger" plain>Logout</el-button>
-      </div>
-      
-      <div class="profile-section">
-        <h2>Your Products</h2>
-        <ul class="product-list">
-          <li v-for="product in products" :key="product.id" class="product-item">
-            <div class="product-image">
-              <img :src="product.image_path" alt="Product Image">
-            </div>
-            <div class="product-details">
-              <h3>{{ product.name }}</h3>
-              <p class="description">{{ product.description }}</p>
-              <p>Price: {{ product.price }}</p>
-              <p>Location: {{ product.location }}</p>
-              <p>Availability: {{ product.available ? 'Available' : 'Not Available' }}</p>
-              <p>Create Date: {{ product.create_date }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
+  <div>
+    <h1>论坛</h1>
+
+    <div>
+      <label for="searchInput">搜索：</label>
+      <input type="text" id="searchInput" v-model="searchStr" @input="searchPosts">
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import axios from 'axios';
-  import { ElMessage } from "element-plus";
-  import { useStore } from "@/stores";
-  import router from "@/router";
-  
-  const store = useStore();
-  const products = ref([]);
-  
-  const fetchProductData = async () => {
-    try {
-      const response = await axios.get('/api/findAllDevice');
-      products.value = response.data;
-    } catch (error) {
-      console.error('Error fetching product data:', error);
-      ElMessage.error('Failed to fetch product data');
+
+    <div v-if="posts.length === 0">
+      <p>没有找到帖子。</p>
+    </div>
+
+    <ul v-else>
+      <li v-for="post in posts" :key="post.id">
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <button @click="deletePost(post.id)">删除</button>
+      </li>
+    </ul>
+
+    <div>
+      <h2>添加新帖子：</h2>
+      <label for="newTitle">标题：</label>
+      <input type="text" id="newTitle" v-model="newPost.title">
+
+      <label for="newContent">内容：</label>
+      <textarea id="newContent" v-model="newPost.content"></textarea>
+
+      <button @click="addPost">添加帖子</button>
+    </div>
+  </div>
+</template>
+
+<script>
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      posts: [],
+      searchStr: '',
+      newPost: {
+        title: '',
+        content: ''
+      }
+    };
+  },
+  mounted() {
+    this.fetchAllPosts();
+  },
+  methods: {
+    fetchAllPosts() {
+      axios.get('/api/findAllPost')
+        .then(response => {
+          this.posts = response.data;
+        })
+        .catch(error => {
+          console.error('获取帖子时出错：', error);
+        });
+    },
+    searchPosts() {
+      axios.get(`/api/findPostByStr?searchStr=${this.searchStr}`)
+        .then(response => {
+          this.posts = response.data;
+        })
+        .catch(error => {
+          console.error('搜索帖子时出错：', error);
+        });
+    },
+    deletePost(postId) {
+      axios.delete(`/api/deletePostByID?id=${postId}`)
+        .then(response => {
+          if (response.status === 200) {
+            this.fetchAllPosts();
+          } else {
+            console.error('删除帖子时出错：', response);
+          }
+        })
+        .catch(error => {
+          console.error('删除帖子时出错：', error);
+        });
+    },
+    addPost() {
+      axios.post('/api/addPost', this.newPost)
+        .then(response => {
+          if (response.status === 200) {
+            this.fetchAllPosts();
+            this.newPost.title = '';
+            this.newPost.content = '';
+          } else {
+            console.error('添加帖子时出错：', response);
+          }
+        })
+        .catch(error => {
+          console.error('添加帖子时出错：', error);
+        });
     }
-  };
-  
-//   onMounted(() => {
-//     fetchProductData();
-//   });
-  
+  }
+};
 </script>
-  
-  <style scoped>
-    .profile-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-  
-    .profile-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-  
-    .profile-section {
-      background-color: #f4f4f4;
-      padding: 20px;
-      border-radius: 8px;
-    }
-  
-    .product-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-  
-    .product-item {
-      display: flex;
-      border: 1px solid #ddd;
-      margin-bottom: 10px;
-      padding: 10px;
-      border-radius: 8px;
-      background-color: #fff;
-    }
-  
-    .product-image img {
-      max-width: 100px;
-      max-height: 100px;
-      object-fit: cover;
-      margin-right: 20px;
-    }
-  
-    .product-details {
-      flex-grow: 1;
-    }
-  
-    .description {
-      margin-bottom: 10px;
-    }
-  </style>
-  
+
+<style scoped>
+/* Add your component styles here */
+</style>
