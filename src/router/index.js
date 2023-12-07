@@ -51,11 +51,20 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('@/views/AboutUser.vue')
+    },{
+      path: '/AddPost',
+      name: 'AddPost',
+      component: () => import('@/views/AddPost.vue')
     }
     ,{
       path: '/news/:id',
       name: 'NewsDetail',
       component: () => import('@/views/NewsDetail.vue'), // 替换成你的实际组件路径
+      props: true // 将路由参数作为组件的 props 传递
+    },{
+      path: '/post/:id',
+      name: 'PostDetail',
+      component: () => import('@/views/PostDetail.vue'), // 替换成你的实际组件路径
       props: true // 将路由参数作为组件的 props 传递
     }
   ]

@@ -9,10 +9,8 @@
             <img :src="newsItem.image_path" alt="News Image">
             <h3 style="margin: 0;">{{ newsItem.title }}</h3>
             <p class="date">{{ formatDate(newsItem.create_date) }}</p>
-
           </div>
-        </li>
-        
+        </li>     
       </ul>
     </div>
   </div>
@@ -66,7 +64,7 @@ function toMoreNews(){
     margin: 0 auto;
     padding: 20px;
     background-size: cover;
-    background-image: url('src/img/0100.jpeg');
+    background-image: url('../../src/img/0100.jpeg');
   }
   .profile-section {
     background-color: rgba(255, 255, 255, 0.9); /* 80% 的不透明度的白色 */
@@ -93,7 +91,8 @@ function toMoreNews(){
     width: 26.5%; /* 设置固定宽度 */
     border: 1px solid #ddd;
     margin-left: 50px;
-    margin-right: 50px;
+    margin-right: 20px;
+    margin-top: 10px;
     margin-bottom: 20px; /* 间距调整 */
     padding: 10px;
     border-radius: 8px;

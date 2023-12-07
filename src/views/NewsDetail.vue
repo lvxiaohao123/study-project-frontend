@@ -1,13 +1,23 @@
 <template>
-    <div v-if="selectedNews" class="news-detail-container">
-      <h2>{{ selectedNews.title }}</h2>
-      <p>{{ selectedNews.content }}</p>
-      <p>日期: {{ formatDate(selectedNews.create_date )}}</p>
-      <!-- <p class="date">{{ formatNewsDate(newsItem.create_date) }}</p> -->
+  <Header></Header>
+  <div class="profile-container">
+    <div class="profile-section">
       <button @click="goBack">返回</button>
-    </div>
-    <div v-else>
-      <p>Loading...</p> <!-- 或者其他加载状态的提示 -->
+        <div v-if="selectedNews" class="news-detail-container">
+          <h1>{{ selectedNews.title }}</h1>
+          <div class="message">
+            <p class="date" style="margin-left: 70%;">作者：{{ selectedNews.author }}</p>
+            <p class="date">发布日期: {{ formatDate(selectedNews.create_date )}}</p>
+          </div>
+          <div>
+            <img :src="selectedNews.image_path" alt="News Image">
+            <p class="content">{{ selectedNews.content }}</p>    
+          </div>      
+        </div>
+        <div v-else>
+          <p>Loading...</p> <!-- 或者其他加载状态的提示 -->
+        </div>
+      </div>
     </div>
   </template>
   
@@ -48,9 +58,63 @@
   <style scoped>
   /* 样式可以根据你的需求进行调整 */
   .news-detail-container {
-    max-width: 800px;
+  max-width: auto;
+  margin: 0 auto;
+  padding: 20px;
+  overflow-y: auto; /* 添加垂直滚动条 */
+  max-height: 500px; /* 设置最大高度，根据需要调整 */
+}
+
+  .date {
+    color: grey;
+    display: inline; /* 或者 display: inline-block; */
+    margin-right: 20px;
+  }
+
+h1 {
+  text-align: center;
+}
+.message {
+  margin: 20px;
+}
+
+button {
+    background-color: #3498db; /* 设置按钮背景色为蓝色 */
+    color: #fff; /* 设置按钮文本颜色为白色 */
+    padding: 8px 16px; /* 添加内边距 */
+    margin: 10px;
+    border: none; /* 移除边框 */
+    cursor: pointer;
+    border-radius: 4px; /* 圆角按钮 */
+  }
+
+  .profile-container {
+    max-width: 100vw;
     margin: 0 auto;
     padding: 20px;
+    background-size: cover;
+    background-image: url('../../src/img/0100.jpeg');
   }
+  .profile-section {
+    background-color: rgba(255, 255, 255, 0.95); /* 80% 的不透明度的白色 */
+    padding: 20px;
+    border-radius: 8px;
+    border-bottom: 2px solid #5bc0de;
+    height: 600px;
+}
+
+.content {
+  text-indent: 2em; /* 首段缩进两字符 */
+  line-height: 2; /* 段间距1.5倍 */
+  font-size: large;
+}
+
+.content img {
+  max-width: 100%; /* 图片宽度最大为容器宽度 */
+  height: auto; /* 图片高度自适应 */
+  display: block; /* 去除图片底部空白 */
+  margin: 0 auto; /* 居中显示图片 */
+}
+
   </style>
   

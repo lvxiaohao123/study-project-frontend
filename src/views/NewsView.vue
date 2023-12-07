@@ -1,10 +1,11 @@
 <template>
+  <Header></Header>
   <div class="news-container">
     <h1>新闻列表</h1>
     <ul class="news-list">
       <li v-for="newsItem in news" :key="newsItem.id" @click="showNewsDetail(newsItem)">
         <h3>{{ newsItem.title }}</h3>
-        <p>{{ newsItem.date }}</p>
+        <p>{{ newsItem.create_date }}</p>
         <!-- 其他新闻信息 -->
       </li>
     </ul>
