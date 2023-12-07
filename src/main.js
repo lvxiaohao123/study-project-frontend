@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
-import App from './App.vue'
-import router from './router'
-
-import 'element-plus/dist/index.css'
-import axios from "axios";
-
-const app = createApp(App)
-
-axios.defaults.baseURL = 'http://localhost:8088'
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
-=======
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
@@ -48,4 +29,3 @@ app.use(createPinia())
 app.use(router)
 
 app.mount('#app')
->>>>>>> 7c1193a199751c6d0cf41735b5158d7a66f6124a
