@@ -1,40 +1,40 @@
 <!-- PostDetailView.vue -->
 <template>
-  <Header></Header>
-  <div class="profile-container">
-    <div class="profile-section">
-        <button style="margin: 10px;" @click="goBack">返回</button>
-        <div  v-if="selectedPost">
-          <div>
-            <p class="date"><el-icon><User /></el-icon>{{ selectedPost.user_id.username }}</p>
-            <p class="date"><el-icon><Clock /></el-icon>{{ formatDate(selectedPost.create_date) }}</p>
+    <Header></Header>
+    <div class="profile-container">
+      <div class="profile-section">
+          <button style="margin: 10px;" @click="goBack">返回</button>
+          <div  v-if="selectedPost">
+            <div>
+              <p class="date"><el-icon><User /></el-icon>{{ selectedPost.user_id.username }}</p>
+              <p class="date"><el-icon><Clock /></el-icon>{{ formatDate(selectedPost.create_date) }}</p>
+            </div>
+            <div>
+              <h2 style="margin-left: 20px;">{{ selectedPost.title }}</h2>
+              <p style="margin: 20px;">{{ selectedPost.content }}</p>
+              <img :src="selectedPost.image_path" alt="Post Image">
+            </div>
+            <h3>评论</h3>
+            <div>
+              <input v-model="newComment" type="text" placeholder="输入评论">
+              <button @click="addComment">提交评论</button>
+            </div>
+            <ul class="comment-list">
+              <li v-for="commentItem in comments" :key="commentItem.id">
+                <p v-if="commentItem.user_id && commentItem.user_id.username" class="comment-name">
+                  <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>{{ commentItem.user_id.username }}</p>
+                <p class="comment-item">{{ commentItem.content }}<br/><br/><span class="date2"><el-icon><Clock /></el-icon>{{ formatDate(commentItem.create_date) }}</span></p>
+                <div>
+                <p class="date"></p>
+                </div>
+              </li>
+            </ul>
           </div>
-          <div>
-            <h2 style="margin-left: 20px;">{{ selectedPost.title }}</h2>
-            <p style="margin: 20px;">{{ selectedPost.content }}</p>
-            <img :src="selectedPost.image_path" alt="Post Image">
+          <div v-else>
+                  <p>Loading...</p> <!-- 或者其他加载状态的提示 -->
           </div>
-          <h3>评论</h3>
-          <div>
-            <input v-model="newComment" type="text" placeholder="输入评论">
-            <button @click="addComment">提交评论</button>
-          </div>
-          <ul class="comment-list">
-            <li v-for="commentItem in comments" :key="commentItem.id">
-              <p v-if="commentItem.user_id && commentItem.user_id.username" class="comment-name">
-                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>{{ commentItem.user_id.username }}</p>
-              <p class="comment-item">{{ commentItem.content }}<br/><br/><span class="date2"><el-icon><Clock /></el-icon>{{ formatDate(commentItem.create_date) }}</span></p>
-              <div>
-              <p class="date"></p>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div v-else>
-                <p>Loading...</p> <!-- 或者其他加载状态的提示 -->
-        </div>
+      </div>
     </div>
-  </div>  
 </template>
 
 <script setup>
@@ -134,6 +134,7 @@ const addComment = async () => {
     height: 700px;
     background-size: cover;
     background-image: url('../../src/img/0100.jpeg');
+    max-height: 100%;
   }
   
   .profile-section {
@@ -143,6 +144,9 @@ const addComment = async () => {
     border-bottom: 2px solid #5bc0de;  
     width: 800px;
     margin: 0 auto; /* 设置左右外边距为 auto 实现水平居中 */
+    border: 2px solid grey;
+    max-height: 100vh;
+    overflow-y: auto; /* 添加垂直滚动条 */
 }
 .post-detail {
   max-width: 600px;
@@ -229,6 +233,11 @@ input {
     display: inline; /* 或者 display: inline-block; */
     margin: 20px;
   }
+
+img {
+  max-width: 100%;
+  height: 300px;
+}
 
   .date2 {
     color: gray;

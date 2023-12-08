@@ -9,7 +9,7 @@
             <p class="date" style="margin-left: 70%;">作者：{{ selectedNews.author }}</p>
             <p class="date">发布日期: {{ formatDate(selectedNews.create_date )}}</p>
           </div>
-          <div>
+          <div class="content">
             <img :src="selectedNews.image_path" alt="News Image">
             <p class="content">{{ selectedNews.content }}</p>    
           </div>      
@@ -109,11 +109,21 @@ button {
   font-size: large;
 }
 
+img {
+  max-width: 100%;
+  height: 300px;
+}
+
+.content {
+  text-indent: 2em; /* 首段缩进两字符 */
+  line-height: 2; /* 段间距1.5倍 */
+  font-size: large;
+}
+
 .content img {
-  max-width: 100%; /* 图片宽度最大为容器宽度 */
-  height: auto; /* 图片高度自适应 */
-  display: block; /* 去除图片底部空白 */
-  margin: 0 auto; /* 居中显示图片 */
+  float: left; /* 让图片向左浮动 */
+  max-width: 50%; /* 图片最大宽度为内容的一半，根据需要调整 */
+  margin-right: 20px; /* 右边距，以便文字不紧贴图片 */
 }
 
   </style>
