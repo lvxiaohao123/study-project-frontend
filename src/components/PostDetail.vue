@@ -1,9 +1,10 @@
 <!-- PostDetailView.vue -->
 <template>
+  <header></header>
   <div>
     <h2>{{ post.title }}</h2>
     <p>{{ post.content }}</p>
-    <img :src="post.image_path" alt="Post Image">
+    <img :src="`../../${post.image_path}`" alt="Post Image">
 
     <h3>评论</h3>
     <ul>

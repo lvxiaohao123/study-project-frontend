@@ -28,10 +28,6 @@ const router = createRouter({
       name: 'index',
       component: () => import('@/views/IndexView.vue')
     }, {
-      path: '/Admin',
-      name: 'Admin',
-      component: () => import('@/views/AdminView.vue')
-    }, {
       path: '/Forum',
       name: 'Forum',
       component: () => import('@/views/ForumView.vue')
@@ -57,18 +53,62 @@ const router = createRouter({
       name: 'NewsDetail',
       component: () => import('@/views/NewsDetail.vue'), // 替换成你的实际组件路径
       props: true // 将路由参数作为组件的 props 传递
-    }
+    },{
+      path: '/device/:id',
+      name: 'DeviceDetail',
+      component: () => import('@/views/DeviceDetail.vue'), // 替换成你的实际组件路径
+      props: true // 将路由参数作为组件的 props 传递
+    },{
+      path: '/to-buy/:id',
+      name: 'to-buy',
+      component: () => import('@/views/ToBuy.vue'), // 替换成你的实际组件路径
+      props: true // 将路由参数作为组件的 props 传递
+    },{
+      path: '/upload-device',
+      name: 'upload-device',
+      component: () => import('@/views/UploadDevice.vue'), 
+    },{
+      path: "/Admin",
+      name: 'Admin',
+      component: () => import('@/admin/MainLayout.vue'),
+      // 嵌套路由
+      children: [
+          {
+              // 这里不设置值，是把main作为默认页面
+              path: "/",
+              name: "Admin-main",
+              component: () => import('@/admin/Main.vue'),
+          },
+          {
+              path: "user",
+              name: "user",
+              component: () => import('@/admin/User.vue'),
+          },
+          {
+              path: "articleList",
+              name: "articleList",
+              component: () => import('@/admin/article/ArticleList.vue'),
+          },
+          {
+              path: "test",
+              name: "test",
+              component: () => import('@/admin/Test.vue'),
+          }
+      ],
+  }
+    
   ]
 })
 
 router.beforeEach((to, from, next) => {
   const store = useStore()
-  if(store.auth.user != null && to.name.startsWith('welcome-')) {
+  if (store.auth.user != null  && to.name &&to.name.startsWith('welcome-')) {
+
     next('/index')
   } else if(store.auth.user == null && to.fullPath.startsWith('/index')) {
     next('/')
   } else if(to.matched.length === 0){
-    next('/index')
+    // next('/index')
   } else {
     next()
   }

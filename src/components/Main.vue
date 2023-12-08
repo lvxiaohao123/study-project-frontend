@@ -93,7 +93,8 @@ function toMoreNews(){
     width: 26.5%; /* 设置固定宽度 */
     border: 1px solid #ddd;
     margin-left: 50px;
-    margin-right: 50px;
+    margin-right: 20px;
+    margin-top:10px;
     margin-bottom: 20px; /* 间距调整 */
     padding: 10px;
     border-radius: 8px;

@@ -3,7 +3,7 @@
     <div class="product-page">
       <h1 class="page-title">商品列表</h1>
       <div class="product-list">
-        <div v-for="device in devices" :key="device.id" class="product-card">
+        <div v-for="device in devices" :key="device.id" class="product-card" @click="goToDeviceDetail(device.id)">
           <div class="product-image">
             <img :src="device.image_path" alt="Product Image">
           </div>
@@ -27,6 +27,7 @@
   <script setup>
   import { ref, onMounted } from 'vue';
   import axios from 'axios';
+import router from '../router';
   
   const devices = ref([]);
   
@@ -45,6 +46,10 @@
     return date.toLocaleDateString('zh-CN', options);
   };
   
+  const goToDeviceDetail = (deviceId) => {
+  router.push(`/device/${deviceId}`);
+};
+
   onMounted(() => {
     fetchDeviceData();
   });
