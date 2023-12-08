@@ -5,19 +5,28 @@
     <div class="profile-section">
         <button style="margin: 10px;" @click="goBack">返回</button>
         <div  v-if="selectedPost">
-          <h2 style="margin-left: 20px;">{{ selectedPost.title }}</h2>
-          <p style="margin: 20px;">{{ selectedPost.content }}</p>
-          <img :src="selectedPost.image_path" alt="Post Image">
-        
+          <div>
+            <p class="date"><el-icon><User /></el-icon>{{ selectedPost.user_id.username }}</p>
+            <p class="date"><el-icon><Clock /></el-icon>{{ formatDate(selectedPost.create_date) }}</p>
+          </div>
+          <div>
+            <h2 style="margin-left: 20px;">{{ selectedPost.title }}</h2>
+            <p style="margin: 20px;">{{ selectedPost.content }}</p>
+            <img :src="selectedPost.image_path" alt="Post Image">
+          </div>
           <h3>评论</h3>
           <div>
-            <textarea v-model="newComment" rows="3" placeholder="输入评论"></textarea>
+            <input v-model="newComment" type="text" placeholder="输入评论">
             <button @click="addComment">提交评论</button>
           </div>
           <ul class="comment-list">
             <li v-for="commentItem in comments" :key="commentItem.id">
-              <p v-if="commentItem.user_id && commentItem.user_id.username" class="comment-name"><el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>{{ commentItem.user_id.username }}</p>
-              <p class="comment-item">{{ commentItem.content }}</p>
+              <p v-if="commentItem.user_id && commentItem.user_id.username" class="comment-name">
+                <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"/>{{ commentItem.user_id.username }}</p>
+              <p class="comment-item">{{ commentItem.content }}<br/><br/><span class="date2"><el-icon><Clock /></el-icon>{{ formatDate(commentItem.create_date) }}</span></p>
+              <div>
+              <p class="date"></p>
+              </div>
             </li>
           </ul>
         </div>
@@ -62,7 +71,8 @@ const addComment = async () => {
     try {
       // 发送 POST 请求来添加评论
       const response = await axios.post('/api/addReply', comment);
-
+    // 插入新评论到数组的开头
+    comments.value.unshift(comment);
       
     comments.value.push(comment);
 
@@ -100,7 +110,7 @@ const addComment = async () => {
     const postId = router.currentRoute.value.params.id;
     try {
       const response1 = await axios.get(`/api/findReplyByPID?id=${postId}`);
-      comments.value = response1.data;
+      comments.value = response1.data.reverse();
       console.log(comments.value);
     } catch (error) {
       console.error('Error fetching comments data:', error);
@@ -140,6 +150,13 @@ const addComment = async () => {
   padding: 20px;
 }
 
+input {
+  border: 3px solid gray;
+  height: 46px;
+  border-radius: 3px;
+  width: 600px;
+}
+
 .post-content {
   font-size: 16px;
   line-height: 1.5;
@@ -147,7 +164,7 @@ const addComment = async () => {
 
 .post-image {
   max-width: 100%;
-  height: auto;
+  height: 100px;
   margin-top: 10px;
 }
 
@@ -166,7 +183,7 @@ const addComment = async () => {
   border-bottom: 1px solid #ddd;
   padding-bottom: 10px;
   border-bottom: 2px solid rgb(218, 214, 214);
-
+  margin-left: 40px;
 }
 
 .comment-text {
@@ -195,6 +212,8 @@ const addComment = async () => {
   font-size: 14px;
 }
 
+
+
 .comment-name {
   color: crimson;
   font: bold;
@@ -203,6 +222,18 @@ const addComment = async () => {
 .comment-form button:hover {
   background-color: #45a049;
 }
+
+.date {
+    margin: 0;
+    color: gray;
+    display: inline; /* 或者 display: inline-block; */
+    margin: 20px;
+  }
+
+  .date2 {
+    color: gray;
+    display: inline; /* 或者 display: inline-block; */
+  }
 
 button {
   background-color: #3498db;
