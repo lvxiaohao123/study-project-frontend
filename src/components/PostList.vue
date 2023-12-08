@@ -5,10 +5,10 @@
       <h2 class="section-title">帖子列表：</h2>
       <el-button type="primary" :icon="Edit" circle @click="goAddPost"/>
       <ul class="post-list">
-        <li v-for="postItem in post" :key="postItem.id" @click="goToPostDetail(postItem.id)">
+        <li v-for="postItem in post" :key="postItem.id" @click="goToPostDetail(postItem)">
           <div class="post-image">
             <p style="margin: 0;font-size: 18px;color:#015197;">{{ postItem.title }}</p>
-            <p class="content">{{postItem.content}}</p>
+            <p class="content">{{postItem.content.slice(0, 30)}}{{ postItem.content.length > 30 ? '......' : '' }}</p>
             <img :src="postItem.image_path" alt="post Image">
           </div>
           <div>
@@ -36,6 +36,7 @@ import {
 } from '@element-plus/icons-vue'
 
   const post = ref([]);
+  const selectedPost = ref(null);
   
   const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -47,13 +48,18 @@ import {
 
 
 const goAddPost = () => {
-    router.push('/Addpost'); //跳转添加帖子页面
+    router.push('/AddPost'); //跳转添加帖子页面
   };
 
-  const fetchProductData = async () => {
+  const goToPostDetail = (postItem) => {
+    selectedPost.value = postItem;
+    router.push(`/post/${postItem.id}`);
+};//跳转帖子详情页面
+
+  const fetchPostData = async () => {
     try {
       const response = await axios.get('/api/findAllPost');
-      post.value = response.data;
+      post.value = response.data.reverse(); // 反转数组
       console.log(post.value);
     } catch (error) {
       console.error('Error fetching post data:', error);
@@ -62,21 +68,20 @@ const goAddPost = () => {
   };
   
   onMounted(() => {
-    fetchProductData();
+    fetchPostData();
   });
 
-  const goToPostDetail = (newsId) => {
-  router.push(`/post/${newsId}`);
-};
+
 
 </script>
 <style scoped>
   .profile-container {
     max-width: 100vw;
     margin: 0 auto;
-    padding: 20px;
+    /* padding: 20px; */
+    height: 700px;
     background-size: cover;
-    background-image: url('src/img/0100.jpeg');
+    background-image: url('../../src/img/0100.jpeg');
   }
   
   .profile-section {
@@ -88,7 +93,6 @@ const goAddPost = () => {
     margin: 0 auto; /* 设置左右外边距为 auto 实现水平居中 */
 }
 
-
   .section-title {
     border-bottom: 2px solid #5bc0de; /* 添加蓝色横线边框 */
     display: inline-block; /* 让边框包裹标题内容 */
@@ -99,19 +103,20 @@ const goAddPost = () => {
 
   .post-list {
     list-style: none;
+    max-height: 600px;
+    overflow-y: auto; /* 添加垂直滚动条 */
     /* display: flex;
     flex-wrap: wrap; 允许多行布局 */
   }
 
   .post-list li {
     cursor: pointer;
-    width: 500px; /* 设置固定宽度 */
+    width: 700px; /* 设置固定宽度 */
     border: 1px solid #ddd;
     margin-right: 30px;
-    margin-bottom: 20px; /* 间距调整 */
+    margin-bottom: 0px; /* 间距调整 */
     padding: 10px;
     background-color: #fff;
-    border:none;
   }
 
   .post-image img {
@@ -133,14 +138,6 @@ const goAddPost = () => {
     display: inline; /* 或者 display: inline-block; */
     margin-left: 20px;
     margin-right: 20px;
-  }
-
-  .news-container {
-    max-width: 100vw;
-    margin: 0 auto;
-    padding: 20px;
-    background-size: cover;
-    background-image: url('src/img/0100.jpeg');
   }
 
   .content {
