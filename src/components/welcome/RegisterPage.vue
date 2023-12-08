@@ -137,7 +137,7 @@ const register = () => {
             email:form.email
         }    
 
-            axios.post('http://localhost:8088/api/register', requestData)
+            axios.post('http://localhost:8088/api/user/register', requestData)
             .then((response) => {
                 console.log(response);
                 if (response.data) {
