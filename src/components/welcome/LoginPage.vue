@@ -63,7 +63,7 @@ const login = () => {
             password: form.password,
         };
 
-        axios.post('http://localhost:8088/api/login', requestData)
+        axios.post('http://localhost:8088/api/user/login', requestData)
   .then((response) => {
     console.log(response);
     if (response.data) {

@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import { useStore } from "@/stores";
+import { createRouter, createWebHistory } from 'vue-router'
+import {useStore} from "@/stores";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,35 +26,54 @@ const router = createRouter({
     }, {
       path: '/index',
       name: 'index',
-      component: () => import('@/views/IndexView.vue'),
-      
+      component: () => import('@/views/IndexView.vue')
+    }, {
+      path: '/Admin',
+      name: 'Admin',
+      component: () => import('@/views/AdminView.vue')
+    }, {
+      path: '/Forum',
+      name: 'Forum',
+      component: () => import('@/views/ForumView.vue')
+    }, {
+      path: '/Shop',
+      name: 'Shop',
+      component: () => import('@/views/ShopView.vue')
+    }, {
+      path: '/Home',
+      name: 'Home',
+      component: () => import('@/views/UserHome.vue')
+    }, {
+      path: '/News',
+      name: 'News',
+      component: () => import('@/views/NewsView.vue')
     },{
       path: '/about',
       name: 'about',
       component: () => import('@/views/AboutUser.vue')
     }
+    ,{
+      path: '/news/:id',
+      name: 'NewsDetail',
+      component: () => import('@/views/NewsDetail.vue'), // 替换成你的实际组件路径
+      props: true // 将路由参数作为组件的 props 传递
+    }
   ]
-});
+})
 
 router.beforeEach((to, from, next) => {
-  const store = useStore();
+  const store = useStore()
+  if(store.auth.user != null && to.name.startsWith('welcome-')) {
+    next('/index')
+  } else if(store.auth.user == null && to.fullPath.startsWith('/index')) {
+    next('/')
+  } else if(to.matched.length === 0){
+    next('/index')
+  } else {
+    next()
+  }
+})
 
-  // 如果用户已登录且访问的是欢迎页，则重定向到首页
-  if (store.auth.user != null && to.name.startsWith('welcome-')) {
-    next('/index');
-  }
-  // 如果用户未登录且访问的是需要登录的页面，则重定向到欢迎页
-  else if (store.auth.user == null && to.matched.some(record => record.meta.requiresAuth)) {
-    next('/');
-  }
-  // 如果路由未匹配到任何页面，则重定向到首页
-  else if (to.matched.length === 0) {
-    next('/index');
-  }
-  // 其他情况放行
-  else {
-    next();
-  }
-});
 
-export default router;
+
+export default router
