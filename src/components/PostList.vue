@@ -58,7 +58,7 @@ const goAddPost = () => {
 
   const fetchPostData = async () => {
     try {
-      const response = await axios.get('/api/findAllPost');
+      const response = await axios.get('/api/post/findAllPost');
       post.value = response.data.reverse(); // 反转数组
       console.log(post.value);
     } catch (error) {

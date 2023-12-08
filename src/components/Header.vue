@@ -73,7 +73,7 @@ function toAbout(){
 
 const logout = () => {
 
-        axios.get('/api/findAllDevice')
+        axios.get('/api/device/findAllDevice')
             .then((response) => {
                 console.log(response);
                 if (response.data) {

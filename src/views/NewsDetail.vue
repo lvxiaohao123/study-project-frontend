@@ -36,7 +36,7 @@
     const newsId = router.currentRoute.value.params.id;
   
     try {
-      const response = await axios.get(`/api/findNewsByID?id=${newsId}`);
+      const response = await axios.get(`/api/news/findNewsByID?id=${newsId}`);
       selectedNews.value = response.data;
     } catch (error) {
       console.error('Error fetching news detail:', error);

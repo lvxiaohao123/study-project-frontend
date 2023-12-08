@@ -70,7 +70,7 @@ const addComment = async () => {
 
     try {
       // 发送 POST 请求来添加评论
-      const response = await axios.post('/api/addReply', comment);
+      const response = await axios.post('/api/reply/addReply', comment);
     // 插入新评论到数组的开头
     comments.value.unshift(comment);
       
@@ -89,7 +89,7 @@ const addComment = async () => {
   const fetchPostDetail = async () => {
     const postId = router.currentRoute.value.params.id;
     try {
-      const response = await axios.get(`/api/findPostByID?id=${postId}`);
+      const response = await axios.get(`/api/post/findPostByID?id=${postId}`);
       selectedPost.value = response.data;
       console.log(selectedPost.value.image_path)
     } catch (error) {
@@ -109,7 +109,7 @@ const addComment = async () => {
   const fetchCommentData = async () => {
     const postId = router.currentRoute.value.params.id;
     try {
-      const response1 = await axios.get(`/api/findReplyByPID?id=${postId}`);
+      const response1 = await axios.get(`/api/reply/findReplyByPID?id=${postId}`);
       comments.value = response1.data.reverse();
       console.log(comments.value);
     } catch (error) {

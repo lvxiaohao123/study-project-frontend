@@ -45,7 +45,7 @@ const submitPost = async () => {
     formData.append('create_date', post.value.create_date);
 
     // 向后端发送 POST 请求
-    const response = await axios.post('/api/addPost', formData, {
+    const response = await axios.post('/api/post/addPost', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

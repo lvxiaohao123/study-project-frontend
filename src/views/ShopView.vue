@@ -32,7 +32,7 @@
   
   const fetchDeviceData = async () => {
     try {
-      const response = await axios.get('/api/findAllDevice');
+      const response = await axios.get('/api/device/findAllDevice');
       devices.value = response.data;
     } catch (error) {
       console.error('Error fetching device data:', error);

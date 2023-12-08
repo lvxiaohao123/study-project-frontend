@@ -39,7 +39,7 @@ const formatDate = (timestamp) => {
 
 const fetchNewsData = async () => {
   try {
-    const response = await axios.get('/api/findAllNews');
+    const response = await axios.get('/api/news/findAllNews');
     news.value = response.data;
   } catch (error) {
     console.error('Error fetching news data:', error);
