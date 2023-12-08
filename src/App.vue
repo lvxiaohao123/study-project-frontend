@@ -6,7 +6,7 @@ import router from "@/router";
 const store = useStore()
 
 if(store.auth.user == null) {
-    get('/api/me', (message) => {
+    get('/api/user/me', (message) => {
         store.auth.user = message
         router.push('/index')
     }, () => {
