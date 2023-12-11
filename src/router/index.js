@@ -69,29 +69,30 @@ const router = createRouter({
       component: () => import('@/views/UploadDevice.vue'), 
     },{
       path: "/Admin",
-      name: 'Admin',
+      name: 'admin',
       component: () => import('@/admin/MainLayout.vue'),
       // 嵌套路由
       children: [
+      
           {
               // 这里不设置值，是把main作为默认页面
-              path: "/",
-              name: "Admin-main",
+              path: "/main",
+              name: "admin-main",
               component: () => import('@/admin/Main.vue'),
           },
           {
-              path: "user",
-              name: "user",
+              path: "/user",
+              name: "admin-user",
               component: () => import('@/admin/User.vue'),
           },
           {
-              path: "articleList",
-              name: "articleList",
+              path: "/articleList",
+              name: "admin-articleList",
               component: () => import('@/admin/article/ArticleList.vue'),
           },
           {
-              path: "test",
-              name: "test",
+              path: "/test",
+              name: "admin-test",
               component: () => import('@/admin/Test.vue'),
           }
       ],

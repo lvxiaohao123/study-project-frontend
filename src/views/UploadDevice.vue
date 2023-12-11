@@ -62,7 +62,7 @@ const submitDevice = async () => {
     formData.append('id', device.value.id);
 
     // 发送设备数据和图片文件到后端
-    await axios.post('/api/addDevice', formData);
+    await axios.post('/api/device/addDevice', formData);
 
     // 清空表单
     device.value = {

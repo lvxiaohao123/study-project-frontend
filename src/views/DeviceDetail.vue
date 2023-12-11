@@ -44,7 +44,7 @@
   const fetchDeviceDetails = async () => {
     try {
       const deviceId = route.params.id;
-      const response = await axios.get(`/api/findDeviceByID?id=${deviceId}`);
+      const response = await axios.get(`/api/device/findDeviceByID?id=${deviceId}`);
       device.value = response.data;
     } catch (error) {
       console.error('Error fetching device details:', error);

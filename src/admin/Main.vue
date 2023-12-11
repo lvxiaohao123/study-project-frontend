@@ -1,5 +1,5 @@
 <template>
-    <div id="main">
+    <div id="Main">
       <h2>我这里是首页</h2>
      
     </div>
@@ -7,7 +7,7 @@
    
   <script>
   export default {
-    name: 'main',
+    name: 'Main',
     data(){
         return {}
     },
