@@ -10,7 +10,6 @@
       <div class="user-info">
         <h1>{{ store.auth.user.username }}的个人主页</h1>
         <p>欢迎回来！</p>
-        <el-button @click="logout" type="danger" plain>退出登录</el-button>
       </div>
     </el-header>
 
@@ -18,7 +17,7 @@
     <el-main>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-card>
+          <el-card class="p-l">
             <template #header>
               <h2>你发布的的商品</h2>
             </template>
@@ -42,6 +41,30 @@
               </el-row>
             </div>
           </el-card>
+          <el-card class="p-l">
+            <template #header>
+              <h2>你收藏的的商品</h2>
+            </template>
+            <div class="product-list">
+              <el-row :gutter="20">
+                <el-col v-for="product in products" :key="product.id" :span="8">
+                  <el-card class="product-card">
+                    <div class="product-image">
+                      <img :src="product.image_path" alt="Product Image">
+                    </div>
+                    <div class="product-details">
+                      <h3>{{ product.name }}</h3>
+                      <p class="description">{{ product.description }}</p>
+                      <p>价格: {{ Fproduct.price }}</p>
+                      <p>地点: {{ Fproduct.location }}</p>
+                      <p>状态: {{ Fproduct.available ? '可用' : '不可用' }}</p>
+                      <p>创建日期: {{ Fproduct.create_date }}</p>
+                    </div>
+                  </el-card>
+                </el-col>
+              </el-row>
+            </div>
+          </el-card>
         </el-col>
       </el-row>
     </el-main>
@@ -59,11 +82,21 @@ import router from '@/router';
 
 const store = useStore();
 const products = ref([]);
+const Fproduct = ref([]);
 
 const fetchProductData = async () => {
   try {
     const response = await axios.get('/api/findAllDevice');
     products.value = response.data;
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    ElMessage.error('Failed to fetch product data');
+  }
+};
+const fetchFProductData = async () => {
+  try {
+    const response = await axios.get(`/api/findFavoriteByUID?user_id=${store.auth.user.id}`);
+    Fproducts.value = response.data;
   } catch (error) {
     console.error('Error fetching product data:', error);
     ElMessage.error('Failed to fetch product data');
@@ -81,6 +114,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.p-l{
+  margin-top: 50px;
+}
 .profile-container {
   max-width: 1200px;
   margin: 0 auto;

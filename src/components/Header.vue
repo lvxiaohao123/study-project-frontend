@@ -15,7 +15,7 @@
             <nav>
                 <router-link to="/">首页</router-link>
                 <router-link to="/Shop">商城</router-link>
-                <router-link to="/contact">论坛</router-link>
+                <router-link to="/Forum">论坛</router-link>
             </nav>
 
             <div class="avatar-container">
@@ -28,7 +28,7 @@
                     <template #dropdown>
                     <el-dropdown-menu>
                         <el-dropdown-item @click="toAbout()"><el-icon><House /></el-icon>个人中心</el-dropdown-item>
-                        <el-dropdown-item ><el-icon><Plus /></el-icon>发布商品</el-dropdown-item>
+                        <el-dropdown-item @click="toUpload()"><el-icon><Plus /></el-icon>发布商品</el-dropdown-item>
                         <el-dropdown-item @click="logout()" type="danger" plain class="logout"><el-icon><SwitchButton /></el-icon>退出登录</el-dropdown-item>
                     </el-dropdown-menu>
                     </template>
@@ -71,9 +71,14 @@ function toAbout(){
     router.push('/about');
 }
 
+function toUpload(){
+    router.push('/upload-device');
+}
+
+
 const logout = () => {
 
-        axios.get('/api/user/logout')
+        axios.get('/api/logout')
             .then((response) => {
                 console.log(response);
                 if (response.data) {

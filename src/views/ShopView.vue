@@ -1,126 +1,121 @@
 <template>
-  <div class="device-form-container">
-    <h1>发布设备</h1>
-    <form @submit.prevent="submitDevice">
-      <label for="name">设备名称:</label>
-      <input type="text" id="name" v-model="device.name" required>
-
-      <label for="description">设备描述:</label>
-      <textarea id="description" v-model="device.description" required></textarea>
-
-      <label for="price">设备价格:</label>
-      <input type="number" id="price" v-model="device.price" required>
-
-      <label for="location">设备位置:</label>
-      <input type="text" id="location" v-model="device.location" required>
-
-      <label for="available">设备可用性:</label>
-      <select id="available" v-model="device.available" required>
-        <option value="1">可用</option>
-        <option value="0">不可用</option>
-      </select>
-
-      <label for="image">设备图片:</label>
-      <input type="file" id="image" accept="image/*" @change="handleImageUpload" required>
-
-      <button type="submit">发布设备</button>
-    </form>
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { useStore } from '@/stores';
-
-const file=ref(null);
-const store = useStore();
-const device = ref({
-  name: '',
-  description: '',
-  price: null,
-  location: '',
-  available: 1,
-  create_date: new Date(), // 初始化为当前日期
-  id: store.auth.user.id
-});
-
-const handleImageUpload = (event) => {
-  file.value = event.target.files[0];
+    <Header></Header>
+    <div class="product-page">
+      <h1 class="page-title">商品列表</h1>
+      <div class="product-list">
+        <div v-for="device in devices" :key="device.id" class="product-card" @click="goToDeviceDetail(device.id)">
+          <div class="product-image">
+            <img :src="device.image_path" alt="Product Image">
+          </div>
+          <div class="product-details">
+            <h2 class="product-name">{{ device.name }}</h2>
+            <p class="product-description">{{ device.description }}</p>
+            <p class="product-price">价格: ¥{{ device.price.toFixed(2) }}</p>
+            <p class="product-location">地点: {{ device.location }}</p>
+            <p class="product-status">
+              状态: {{ device.available ? '可用' : '不可用' }}
+            </p>
+            <p class="product-date">
+              创建日期: {{ formatDate(device.create_date) }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref, onMounted } from 'vue';
+  import axios from 'axios';
+import router from '../router';
+  
+  const devices = ref([]);
+  
+  const fetchDeviceData = async () => {
+    try {
+      const response = await axios.get('/api/findAllDevice');
+      devices.value = response.data;
+    } catch (error) {
+      console.error('Error fetching device data:', error);
+    }
+  };
+  
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('zh-CN', options);
+  };
+  
+  const goToDeviceDetail = (deviceId) => {
+  router.push(`/device/${deviceId}`);
 };
 
-const submitDevice = async () => {
-  try {
-    const formData = new FormData();
-    formData.append('file', file.value);
-    formData.append('name', device.value.name);
-    formData.append('description', device.value.description);
-    formData.append('price', device.value.price);
-    formData.append('location', device.value.location);
-    formData.append('available', device.value.available);
-    formData.append('create_date', device.value.create_date);
-    formData.append('id', device.value.id);
-
-    // 发送设备数据和图片文件到后端
-    await axios.post('/api/addDevice', formData);
-
-    // 清空表单
-    device.value = {
-      name: '',
-      description: '',
-      price: null,
-      location: '',
-      available: 1,
-      image_path: '',
-      create_date: new Date(),
-      id: store.auth.user.id
-    };
-
-    // 提示用户发布成功
-    alert('设备发布成功！');
-  } catch (error) {
-    console.error('Error publishing device:', error);
-    alert('设备发布失败！');
+  onMounted(() => {
+    fetchDeviceData();
+  });
+  </script>
+  
+  <style scoped>
+  .product-page {
+    max-width: 1200px;
+    margin: 20px auto;
   }
-};
-</script>
-
-<style scoped>
-.device-form-container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-label {
-  display: block;
-  margin-bottom: 8px;
-}
-
-input,
-textarea,
-select {
-  width: 100%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  padding: 8px;
-  margin-bottom: 16px;
-  box-sizing: border-box;
-}
-
-button {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-</style>
+  
+  .page-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
+  
+  .product-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .product-image img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid #e0e0e0;
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .product-details {
+    padding: 15px;
+  }
+  
+  .product-name {
+    font-size: 18px;
+    margin-bottom: 8px;
+  }
+  
+  .product-description {
+    color: #666;
+    margin-bottom: 12px;
+  }
+  
+  .product-price {
+    color: #e4393c;
+    margin-bottom: 8px;
+  }
+  
+  .product-location,
+  .product-status,
+  .product-date {
+    margin-bottom: 8px;
+    color: #999;
+  }
+  </style>
+  
