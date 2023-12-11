@@ -73,8 +73,7 @@ const addComment = async () => {
       const response = await axios.post('/api/reply/addReply', comment);
     // 插入新评论到数组的开头
     comments.value.unshift(comment);
-      
-    comments.value.push(comment);
+
 
     // 清空评论输入框
     newComment.value = '';

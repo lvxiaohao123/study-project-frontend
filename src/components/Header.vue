@@ -78,7 +78,7 @@ function toUpload(){
 
 const logout = () => {
 
-        axios.get('/api/logout')
+        axios.get('/api/user/logout')
             .then((response) => {
                 console.log(response);
                 if (response.data) {
