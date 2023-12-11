@@ -53,7 +53,7 @@
   const fetchDeviceDetails = async () => {
     try {
       const deviceId = route.params.id;
-      const response = await axios.get(`/api/findDeviceByID?id=${deviceId}`);
+      const response = await axios.get(`/api/device/findDeviceByID?id=${deviceId}`);
       device.value = response.data;
     } catch (error) {
       console.error('Error fetching device details:', error);
@@ -71,14 +71,14 @@
       const order = {
         id: null,
         buyer_id: user.value,
-        device_id: device.value.id,
+        device_id: device.value,
         order_date: new Date(),
         status: '待确认',
         address: user.value.address // 使用用户输入的新地址
       };
   
       // 发送订单数据到后端
-      const response = await axios.post('/api/getorder', order);
+      const response = await axios.post('/api/order/addOrder', order);
   
       // 处理后端响应，可能需要根据后端返回的数据进行其他操作
       console.log('Order confirmation response:', response.data);

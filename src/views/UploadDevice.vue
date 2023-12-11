@@ -32,6 +32,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useStore } from '@/stores';
+import router from '../router';
 
 const file=ref(null);
 const store = useStore();
@@ -78,6 +79,7 @@ const submitDevice = async () => {
 
     // 提示用户发布成功
     alert('设备发布成功！');
+    router.push("/Shop");
   } catch (error) {
     console.error('Error publishing device:', error);
     alert('设备发布失败！');

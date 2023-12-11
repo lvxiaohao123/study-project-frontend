@@ -86,7 +86,7 @@ const Fproduct = ref([]);
 
 const fetchProductData = async () => {
   try {
-    const response = await axios.get('/api/findAllDevice');
+    const response = await axios.get('/api/device/findAllDevice');
     products.value = response.data;
   } catch (error) {
     console.error('Error fetching product data:', error);

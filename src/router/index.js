@@ -47,6 +47,10 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('@/views/AboutUser.vue')
+    },{
+      path: '/AddPost',
+      name: 'AddPost',
+      component: () => import('@/views/AddPost.vue')
     }
     ,{
       path: '/news/:id',
@@ -67,14 +71,19 @@ const router = createRouter({
       path: '/upload-device',
       name: 'upload-device',
       component: () => import('@/views/UploadDevice.vue'), 
-    },{
+    },{path: '/post/:id',
+    name: 'PostDetail',
+    component: () => import('@/views/PostDetail.vue'), // 替换成你的实际组件路径
+    props: true // 将路由参数作为组件的 props 传递
+  },{
       path: "/Admin",
       name: 'admin',
       component: () => import('@/admin/MainLayout.vue'),
       // 嵌套路由
       children: [
       
-          {
+      
+        {
               // 这里不设置值，是把main作为默认页面
               path: "/main",
               name: "admin-main",

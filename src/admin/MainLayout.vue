@@ -113,8 +113,15 @@ import {
 } from "@element-plus/icons-vue";
 import { ElMessageBox } from "element-plus";
 export default {
+  
   name: "MainLayout",
   mounted() {
+  },created() {
+    // 设置初始的 activeTabName 为 "main"
+    this.activeTabName = "main";
+
+    // 导航到首页
+    this.$router.push("/main");
   },
   data() {
     return {
@@ -234,6 +241,9 @@ export default {
         });
     },
   },
+
+
+
 };
 </script>
 
