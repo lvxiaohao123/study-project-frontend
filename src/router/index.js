@@ -81,31 +81,40 @@ const router = createRouter({
     },
     {
       path: "/Admin",
-      name: 'Admin',
+      name: 'admin',
       component: () => import('@/admin/MainLayout.vue'),
       children: [
         {
+          // 这里不设置值，是把main作为默认页面
           path: "",
-          name: "admin-main",
-          component: () => import('@/admin/Main.vue')
-        },
-        {
-          path: "user",
-          name: "admin-user",
-          component: () => import('@/admin/User.vue')
-        },
-        {
-          path: "articleList",
-          name: "admin-articleList",
-          component: () => import('@/admin/article/ArticleList.vue')
-        },
-        {
-          path: "test",
-          name: "admin-test",
-          component: () => import('@/admin/Test.vue')
-        }
-      ]
-    }
+          name: "admin-ain",
+          component: () => import('@/admin/Main.vue'),
+      },
+      
+          {
+              // 这里不设置值，是把main作为默认页面
+              path: "/main",
+              name: "admin-main",
+              component: () => import('@/admin/Main.vue'),
+          },
+          {
+              path: "/user",
+              name: "admin-user",
+              component: () => import('@/admin/User.vue'),
+          },
+          {
+              path: "/articleList",
+              name: "admin-articleList",
+              component: () => import('@/admin/article/ArticleList.vue'),
+          },
+          {
+              path: "/test",
+              name: "admin-test",
+              component: () => import('@/admin/Test.vue'),
+          }
+      ],
+  }
+    
   ]
 })
 

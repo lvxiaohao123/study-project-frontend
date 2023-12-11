@@ -95,7 +95,7 @@ const fetchProductData = async () => {
 };
 const fetchFProductData = async () => {
   try {
-    const response = await axios.get(`/api/findFavoriteByUID?user_id=${store.auth.user.id}`);
+    const response = await axios.get(`/api/favorite/findFavoriteByUID?user_id=${store.auth.user.id}`);
     Fproducts.value = response.data;
   } catch (error) {
     console.error('Error fetching product data:', error);

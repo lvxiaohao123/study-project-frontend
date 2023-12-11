@@ -1,32 +1,30 @@
 <template>
-    <div>
-      <el-header></el-header>
-      <div class="product-page">
-        <h1 class="page-title">设备列表</h1>
-        <el-table :data="devices" style="width: 100%">
-          <el-table-column prop="name" label="设备名称"></el-table-column>
-          <el-table-column prop="description" label="描述"></el-table-column>
-          <el-table-column label="价格">
-  <template v-slot="{ row }">
-    ¥{{ row.price }}
-  </template>
-</el-table-column>
-          <el-table-column prop="location" label="地点"></el-table-column>
-          <el-table-column prop="available" label="状态">
-            <template slot-scope="scope">{{ devices.available ? '可用' : '不可用' }}</template>
-          </el-table-column>
-          <el-table-column prop="create_date" label="创建日期">
-            <template slot-scope="scope">{{ formatDate(devices.create_date) }}</template>
-          </el-table-column>
-          <el-table-column label="操作">
-            <template slot-scope="scope">
-              <el-button type="primary" @click="goToDeviceDetail(devices.id)">查看详情</el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-      </div>
+  <div>
+    <el-header></el-header>
+    <div class="product-page">
+      <h1 class="page-title">设备列表</h1>
+      <el-table :data="devices" style="width: 100%">
+        <el-table-column prop="name" label="设备名称"></el-table-column>
+        <el-table-column prop="description" label="描述"></el-table-column>
+        <el-table-column prop="price" label="价格">
+          <template #default="{ row }">¥{{ row.price.toFixed(2) }}</template>
+        </el-table-column>
+        <el-table-column prop="location" label="地点"></el-table-column>
+        <el-table-column prop="available" label="状态">
+          <template #default="{ row }">{{ row.available ? '可用' : '不可用' }}</template>
+        </el-table-column>
+        <el-table-column prop="create_date" label="创建日期">
+          <template #default="{ row }">{{ formatDate(row.create_date) }}</template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template #default="{ row }">
+            <el-button type="primary" @click="goToDeviceDetail(row.id)">查看详情</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
   import { ref, onMounted } from 'vue';
@@ -43,7 +41,7 @@
       console.error('Error fetching device data:', error);
     }
   };
-
+  
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);

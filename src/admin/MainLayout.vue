@@ -59,7 +59,7 @@
           >
             <el-menu-item index="1" class="fr">复健设备综合云平台</el-menu-item>
             <el-sub-menu index="2" class="fr">
-              <template #title class="fr">我的工作台</template>
+              <template #title >我的工作台</template>
               <el-menu-item index="2-1">我的消息</el-menu-item>
               <el-menu-item index="2-2">设置</el-menu-item>
               <el-menu-item index="2-3" @click="exitLogin"
@@ -119,7 +119,7 @@ export default {
   data() {
     return {
       //当前选项卡
-      activeTabName: "admin",
+      activeTabName: "main",
       //需要显示的标签数组
       editableTabs: [
         {
@@ -128,13 +128,14 @@ export default {
         },
       ],
       //左侧菜单选项配置
-      asideMenu: [{
+      asideMenu: [
+      {
           title: "首页",
           index: "main",
         },
         {
           title: "用户",
-          index: "/user",
+          index: "user",
         },
         {
           title: "文章",
@@ -189,9 +190,9 @@ export default {
       let tabPaneName = tabsPaneContext.paneName;
       //处理一个特殊情况，首页的index 为 '' ，这里取得值为0
       if (tabPaneName == 0) {
-        tabPaneName = "/Admin";
+        tabPaneName = "main";
       }
-      this.$router.push("/Admin" + tabPaneName);
+      this.$router.push("/" + tabPaneName);
     },
 
     //(1)移除标签，（2）返回前一个路由
@@ -210,7 +211,7 @@ export default {
       }
       //高亮和退到前一个路由
       this.activeTabName = routeIndex;
-      this.$router.push("/Admin" + routeIndex);//注意
+      this.$router.push("/admin" + routeIndex);//注意
       //删除当前关闭的路由标签
       this.editableTabs.splice(eleIndex, 1);
     },
@@ -226,7 +227,7 @@ export default {
          
           ElMessage.success('退出登录成功！');
             store.auth.user = null;
-            router.push('/welcome-login');
+            router.push('/');
         })
         .catch(() => {
           //取消：就不做任何提示了
