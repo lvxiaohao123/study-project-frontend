@@ -13,16 +13,24 @@
                 </div>
               </el-col>
               <el-col :span="12">
-                <!-- 商品信息 -->
-                <el-card class="product-info-card">
-                  <h1>{{ device.name }}</h1>
-                  <p class="description">{{ device.description }}</p>
-                  <p>价格: <span style="color: red;">¥{{ device.price }}</span></p>
-                  <p>地点: {{ device.location }}</p>
-                  <p>状态: {{ device.available ? '可用' : '不可用' }}</p>
-                  <p>创建日期: {{ formatDate(device.create_date) }}</p>
+              <!-- 商品信息 -->
+              <el-card class="product-info-card">
+                <el-icon @click="addFavorite"><Star /></el-icon>
+                <h1>{{ device.name }}</h1>
+                <p class="description">{{ device.description }}</p>
+                <p>价格: <span style="color: red;">¥{{ device.price }}</span></p>
+                <p>地点: {{ device.location }}</p>
+                <p>状态: {{ device.available ? '可用' : '不可用' }}</p>
+                <p>创建日期: {{ formatDate(device.create_date) }}</p>
+
+                <!-- 添加条件渲染 -->
+                <template v-if="hasProduct(device.id)">
+                  <button class="purchase-button" @click="goToUpdateProduct(device.id)">编辑</button>
+                </template>
+                <template v-else>
                   <el-button @click="purchase" type="primary" class="purchase-button">购买</el-button>
-                </el-card>
+                </template>
+              </el-card>
               </el-col>
             </el-row>
           </el-main>
@@ -36,11 +44,14 @@
   import axios from 'axios';
   import { ElButton, ElContainer, ElHeader, ElMain, ElCard, ElRow, ElCol } from 'element-plus';
   import { useRoute, useRouter } from 'vue-router';
+  import {useStore} from "@/stores";
   
   const device = ref({});
   const route = useRoute();
   const router = useRouter();
-  
+  const store = useStore()
+   const products = ref([]);
+
   const fetchDeviceDetails = async () => {
     try {
       const deviceId = route.params.id;
@@ -54,7 +65,23 @@
   onMounted(() => {
     fetchDeviceDetails();
   });
+
+ 
+
+const fetchProductData = async () => {
+  try {
+    const response = await axios.get(`/api/device/findDeviceByUID?user_id=${store.auth.user.id}`);
+    products.value = response.data;
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    ElMessage.error('Failed to fetch product data');
+  }
+};//检查该商品是否是自己发布的商品
   
+const hasProduct = (productId) => {
+  return products.value.some(product => product.id === productId);
+};
+
   const formatDate = (dateString) => {
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const date = new Date(dateString);
@@ -70,7 +97,33 @@ const purchase = () => {
   }
 };
 
+const addFavorite = async () => {
+    try {
+      const favoriteData = {
+        device_id: device.value,// 设备
+        user_id: store.auth.user ,
+      };
 
+      const response = await axios.post(`/api/favorite/addFavorite`, favoriteData);
+
+      // 处理成功，可以显示提示信息给用户
+      console.log('商品已收藏:', response.data);
+      ElMessage.success('收藏成功！');
+      router.push(`/Shop`);
+    } catch (error) {
+      console.error('添加商品到收藏夹时出错:', error);
+      ElMessage.error('收藏失败！');
+      // 处理错误，可以显示错误消息给用户或者记录错误日志
+    }
+  };
+
+  onMounted(() => {
+  fetchProductData();
+});
+
+const goToUpdateProduct = (productId) => {
+  router.push(`/UpdateDevice/${productId}`);
+};
   </script>
 <style scoped>
 .product-row {
@@ -95,6 +148,6 @@ const purchase = () => {
 
 .purchase-button {
   margin-top: 20px;
-  width: 100%;
+  width: 10%;
 }
 </style>

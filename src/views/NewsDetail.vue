@@ -15,7 +15,7 @@
           </div>      
         </div>
         <div v-else>
-          <p>Loading...</p> <!-- 或者其他加载状态的提示 -->
+          <el-empty description="description" />
         </div>
       </div>
     </div>

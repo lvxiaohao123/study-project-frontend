@@ -3,21 +3,14 @@
     <div class="product-page">
       <h1 class="page-title">商品列表</h1>
       <div class="product-list">
-        <div v-for="device in devices" :key="device.id" class="product-card" @click="goToDeviceDetail(device.id)">
+        <div  v-for="device in devices" :key="device.id" class="product-card" @click="goToDeviceDetail(device.id)">
           <div class="product-image">
             <img :src="device.image_path" alt="Product Image">
           </div>
           <div class="product-details">
             <h2 class="product-name">{{ device.name }}</h2>
-            <p class="product-description">{{ device.description }}</p>
-            <p class="product-price">价格: ¥{{ device.price.toFixed(2) }}</p>
-            <p class="product-location">地点: {{ device.location }}</p>
-            <p class="product-status">
-              状态: {{ device.available ? '可用' : '不可用' }}
-            </p>
-            <p class="product-date">
-              创建日期: {{ formatDate(device.create_date) }}
-            </p>
+            <p class="product-description">{{ device.description.slice(0, 20) }}{{ device.description.length > 30 ? '...' : '' }}</p>
+            <p class="product-price">¥:{{ device.price.toFixed(2) }}</p>
           </div>
         </div>
       </div>
@@ -33,7 +26,7 @@ import router from '../router';
   
   const fetchDeviceData = async () => {
     try {
-      const response = await axios.get('/api/device/findAllDevice');
+      const response = await axios.get('/api/device/findAvailableDevice');
       devices.value = response.data;
     } catch (error) {
       console.error('Error fetching device data:', error);
@@ -68,14 +61,13 @@ import router from '../router';
   
   .product-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(208px, 1fr));
     gap: 20px;
   }
   
   .product-card {
     background-color: #fff;
     border: 1px solid #e0e0e0;
-    border-radius: 8px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s;
   }
@@ -85,11 +77,13 @@ import router from '../router';
   }
   
   .product-image img {
-    width: 100%;
-    height: 200px;
+    width: 180px;
+    height: 140px;
     object-fit: cover;
     border-bottom: 1px solid #e0e0e0;
-    border-radius: 8px 8px 0 0;
+    margin-left: 20px;
+    margin-top: 20px;
+    object-fit: contain; 
   }
   
   .product-details {

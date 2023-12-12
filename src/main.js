@@ -13,7 +13,7 @@ import Header from './components/Header.vue'
 import Banner from './components/Banner.vue'
 import Footer from './components/Footer.vue'
 import Main from './components/Main.vue'
-
+import HomeSide from './components/HomeSide.vue'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -25,6 +25,7 @@ app.component('Header',Header)
 app.component('Banner',Banner)
 app.component('Footer',Footer)
 app.component('Main',Main)
+app.component('HomeSide',HomeSide)
 
 axios.defaults.baseURL = 'http://localhost:8088'
 

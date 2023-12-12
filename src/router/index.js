@@ -51,6 +51,22 @@ const router = createRouter({
       path: '/AddPost',
       name: 'AddPost',
       component: () => import('@/views/AddPost.vue')
+    },{
+      path: '/UserDevice',
+      name: 'UserDevice',
+      component: () => import('@/views/UserDevice.vue')
+    },{
+      path: '/Favorite',
+      name: 'Favorite',
+      component: () => import('@/views/Favorite.vue')
+    },{
+      path: '/Order',
+      name: 'Order',
+      component: () => import('@/views/Order.vue')
+    },{
+      path: '/UpdateDevice/:id',
+      name: 'UpdateDevice',
+      component: () => import('@/views/UpdateDevice.vue')
     }
     ,{
       path: '/news/:id',

@@ -133,7 +133,7 @@ const addComment = async () => {
     height: 700px;
     background-size: cover;
     background-image: url('../../src/img/0100.jpeg');
-    max-height: 100%;
+    max-height: 700px;
   }
   
   .profile-section {
@@ -141,7 +141,7 @@ const addComment = async () => {
     padding: 20px;
     border-radius: 8px;
     border-bottom: 2px solid #5bc0de;  
-    width: 800px;
+    width: 700px;
     margin: 0 auto; /* 设置左右外边距为 auto 实现水平居中 */
     border: 2px solid grey;
     max-height: 100vh;

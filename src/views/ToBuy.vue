@@ -84,8 +84,7 @@
       console.log('Order confirmation response:', response.data);
   
       // 执行任何必要的操作以确认订单
-      // 例如，在存储中更新订单状态
-      store.commit('confirmOrder', order);
+      router.push("/Order");
   
       // 也可以导航到“感谢”页面或执行其他操作
       // router.push('/thank-you');
