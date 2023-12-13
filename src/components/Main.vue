@@ -1,8 +1,8 @@
 <template>
   <div class="profile-container">
     <div class="profile-section">
-      <h2 class="section-title">科普小知识</h2>
-      <h3 class="to-More" @click="toMoreNews()">更多新闻>>></h3>
+      <h2 class="section-title">最新资讯</h2>
+      <h3 class="to-More" @click="toMoreNews()">更多资讯>>></h3>
       <ul class="news-list">
         <li v-for="(newsItem) in news.slice(0, 6)" :key="newsItem.id" class="news-item" @click="goToNewsDetail(newsItem.id)">
           <div class="news-image">

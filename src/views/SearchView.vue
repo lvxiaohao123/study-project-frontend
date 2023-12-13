@@ -20,14 +20,14 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
 import { ElMessage } from "element-plus";
-import { useStore } from "@/stores";
 import router from "@/router";
+import axios from 'axios';
+import { useRoute} from 'vue-router';
 
-const store = useStore();
 const news = ref([]);
 const selectedNews = ref(null);
+const route = useRoute();
 
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
@@ -37,15 +37,22 @@ const formatDate = (timestamp) => {
   return `${year}年${month}月${day}日`;
 };
 
-const fetchNewsData = async () => {
+
+
+const fetchNewsList = async () => {
   try {
-    const response = await axios.get('/api/news/findAllNews');
+    const searchStr = route.params.searchStr;
+    const response = await axios.get(`/api/news/findNewsByStr?searchStr=${searchStr}`);
     news.value = response.data;
   } catch (error) {
-    console.error('Error fetching news data:', error);
-    ElMessage.error('Failed to fetch news data');
+    console.error('Error fetching device details:', error);
   }
 };
+
+  
+  onMounted(() => {
+    fetchNewsList();
+  });
 
 const showNewsDetail = (newsItem) => {
   selectedNews.value = newsItem;
@@ -59,9 +66,6 @@ const goBack = () => {
   router.push('/index'); // 假设有一个路由配置为 '/index'
 };
 
-onMounted(() => {
-  fetchNewsData();
-});
 </script>
 
 <style scoped>

@@ -73,7 +73,7 @@
         buyer_id: user.value,
         device_id: device.value,
         order_date: new Date(),
-        status: '待确认',
+        status: '待发货',
         address: user.value.address // 使用用户输入的新地址
       };
   
@@ -84,7 +84,7 @@
       console.log('Order confirmation response:', response.data);
   
       // 执行任何必要的操作以确认订单
-      router.push("/Order");
+      router.push("/MyOrder");
   
       // 也可以导航到“感谢”页面或执行其他操作
       // router.push('/thank-you');

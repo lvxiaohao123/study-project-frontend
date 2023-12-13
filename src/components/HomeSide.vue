@@ -5,7 +5,8 @@
           <nav class="nav-links">
               <router-link to="/UserDevice"><el-icon><Goods /></el-icon>我的发布</router-link>
               <router-link to="/Favorite"><el-icon><CollectionTag /></el-icon>收藏夹</router-link>
-              <router-link to="/Order"><el-icon><List /></el-icon>我的订单</router-link>
+              <router-link to="/MyOrder"><el-icon><List /></el-icon>我买到的</router-link>
+              <router-link to="/SoldOrder"><el-icon><Coin /></el-icon>我卖出的</router-link>
           </nav>
       </header>
 
@@ -39,10 +40,10 @@ Plus,
 
 const store = useStore()
 
-onMounted(() => {
-  // 在组件加载完成时执行自动跳转
-  router.push("/UserDevice");
-});
+// onMounted(() => {
+//   // 在组件加载完成时执行自动跳转
+//   router.push("/UserDevice");
+// });
 
 </script>
 

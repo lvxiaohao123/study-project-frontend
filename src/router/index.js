@@ -60,13 +60,21 @@ const router = createRouter({
       name: 'Favorite',
       component: () => import('@/views/Favorite.vue')
     },{
-      path: '/Order',
-      name: 'Order',
-      component: () => import('@/views/Order.vue')
+      path: '/MyOrder',
+      name: 'MyOrder',
+      component: () => import('@/views/MyOrder.vue')
+    },{
+      path: '/SoldOrder',
+      name: 'SoldOrder',
+      component: () => import('@/views/SoldOrder.vue')
     },{
       path: '/UpdateDevice/:id',
       name: 'UpdateDevice',
       component: () => import('@/views/UpdateDevice.vue')
+    },{
+      path: '/SearchView/:searchStr',
+      name: 'SearchView',
+      component: () => import('@/views/SearchView.vue'),
     }
     ,{
       path: '/news/:id',

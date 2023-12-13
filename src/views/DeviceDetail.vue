@@ -20,14 +20,13 @@
                 <p class="description">{{ device.description }}</p>
                 <p>价格: <span style="color: red;">¥{{ device.price }}</span></p>
                 <p>地点: {{ device.location }}</p>
-                <p>状态: {{ device.available ? '可用' : '不可用' }}</p>
-                <p>创建日期: {{ formatDate(device.create_date) }}</p>
+                <p>发布日期: {{ formatDate(device.create_date) }}</p>
 
                 <!-- 添加条件渲染 -->
-                <template v-if="hasProduct(device.id)">
+                <template v-if="hasProduct(device.id) && device.available!='已售出'" >
                   <button class="purchase-button" @click="goToUpdateProduct(device.id)">编辑</button>
                 </template>
-                <template v-else>
+                <template v-if="device.available!='已售出' && !hasProduct(device.id)">
                   <el-button @click="purchase" type="primary" class="purchase-button">购买</el-button>
                 </template>
               </el-card>
@@ -70,7 +69,7 @@
 
 const fetchProductData = async () => {
   try {
-    const response = await axios.get(`/api/device/findDeviceByUID?user_id=${store.auth.user.id}`);
+    const response = await axios.get(`/api/device/findUserAbleDevice?user_id=${store.auth.user.id}`);
     products.value = response.data;
   } catch (error) {
     console.error('Error fetching product data:', error);
@@ -135,7 +134,7 @@ const goToUpdateProduct = (productId) => {
 .product-image img {
   height: 60%;
   width: auto;
-  max-width: 800px;
+  max-width: 300px;
   border-radius: 8px;
 }
 
@@ -147,7 +146,13 @@ const goToUpdateProduct = (productId) => {
 }
 
 .purchase-button {
-  margin-top: 20px;
-  width: 10%;
+  background-color: rgb(154, 150, 150); /* 设置按钮背景色为蓝色 */
+  color: #fff; /* 设置按钮文本颜色为白色 */
+  padding: 8px 16px; /* 添加内边距 */
+  margin: 10px;
+  border: none; /* 移除边框 */
+  cursor: pointer;
+  height: 40px;
+  border-radius: 4px; /* 圆角按钮 */
 }
 </style>

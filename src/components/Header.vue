@@ -7,8 +7,8 @@
 
             <!-- 搜索框 -->
             <div class="search-bar">
-                <el-input v-model="input" placeholder="" />
-                <el-button type="primary"><el-icon><Search /></el-icon>搜索</el-button>
+                <el-input v-model="input" placeholder="搜索资讯" />
+                <el-button type="primary" @click="searchNews"><el-icon><Search /></el-icon>搜索</el-button>
             </div>
 
             <!-- 导航选项 -->
@@ -16,6 +16,7 @@
                 <router-link to="/">首页</router-link>
                 <router-link to="/Shop">商城</router-link>
                 <router-link to="/Forum">论坛</router-link>
+                <router-link to="/IDE">IDE设备</router-link>
             </nav>
 
             <div class="avatar-container">
@@ -97,6 +98,26 @@ const logout = () => {
             });
     
 };
+
+const searchNews = async () => {
+    try {
+        // 获取输入的搜索字符串
+        const searchStr = input.value;
+
+        // 跳转到搜索结果页面，携带搜索字符串参数
+        router.push({
+            name: 'SearchView', // 替换为你的搜索结果页面的路由名称
+            params: {
+                searchStr: searchStr,
+            },
+        });
+    } catch (error) {
+        console.error('搜索失败：', error);
+    }
+};
+
+
+
 </script>
 
 <style scoped>
