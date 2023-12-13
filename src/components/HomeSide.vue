@@ -38,12 +38,8 @@ CirclePlusFilled,
 Plus,
 } from '@element-plus/icons-vue'
 
-const store = useStore()
 
-// onMounted(() => {
-//   // 在组件加载完成时执行自动跳转
-//   router.push("/UserDevice");
-// });
+
 
 </script>
 
