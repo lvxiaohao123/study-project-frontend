@@ -3,24 +3,32 @@
   <HomeSide></HomeSide>
   <div class="order-container">
     <h2><el-icon><List /></el-icon>我买到的</h2>
-    <ul class="order-list">
+
+    <!-- 当有订单时渲染订单列表，否则显示 <el-empty> -->
+    <ul v-if="orders.length > 0" class="order-list">
       <li v-for="order in orders" :key="order.device_id.id" class="order-item">
+        <!-- 订单的详细信息 -->
         <div class="order-image">
           <img :src="order.device_id.image_path" alt="Order Image">
         </div>
-        <div v-if="order" class="order-details "  @click="goToDeviceDetail(order.device_id.id)">
+        <div v-if="order" class="order-details " @click="goToDeviceDetail(order.device_id.id)">
           <h3 style="cursor: pointer;">{{ order.device_id.name }}</h3>
           <p class="description">{{ order.device_id.description.slice(0, 25) }}{{ order.device_id.description.length > 30 ? '...' : '' }}</p>
           <p>¥: {{ order.device_id.price }}</p>
           <p :style="{ color: order.status === '待发货' ? 'red' : order.status === '已发货' ? 'green' : 'black' }">
-          ¥: {{ order.status }}
-        </p>
+            订单状态: {{ order.status }}
+          </p>
         </div>
+
+        <!-- 取消订单按钮 -->
         <div>
-        <button v-if="order.status !== '已发货'" @click="deleteOrder(order.id)">取消订单</button>
+          <button v-if="order.status !== '已发货'" @click="deleteOrder(order.id)">取消订单</button>
         </div>
       </li>
     </ul>
+
+    <!-- 没有订单时显示 <el-empty> -->
+    <el-empty v-else description="description" />
   </div>
 </template>
 

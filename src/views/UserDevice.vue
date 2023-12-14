@@ -3,8 +3,11 @@
   <HomeSide></HomeSide>
   <div class="order-container">
     <h2><el-icon><Goods /></el-icon>我的发布</h2>
-    <ul class="order-list">
+
+    <!-- 当有商品时渲染商品列表，否则显示 <el-empty> -->
+    <ul v-if="products.length > 0" class="order-list">
       <li v-for="product in products" :key="product.id" class="order-item">
+        <!-- 商品的详细信息 -->
         <div class="order-image">
           <img :src="product.image_path" alt="Product Image">
         </div>
@@ -15,18 +18,28 @@
           <p v-if="product.available === '上架'">设备状态: 未售出</p>
           <p v-else-if="product.available === '已售出'">设备状态: 已售出</p>
           <p v-else-if="product.available === '下架'">设备状态: 下架中</p>
-          <!-- 如果是“下架”，则不显示内容 -->
-
         </div>
-        <div>
-          
+
+        <!-- 根据商品状态显示不同按钮 -->
+        <div v-if="product.available === '下架'">         
             <button @click="goToUpdateProduct(product.id)">编辑</button><br/>
-            <button @click="deleteProduct(product.id)">下架</button>
+            <button @click="deleteProduct(product.id)">删除</button><br/>
+            <button @click="PutOnDevice(product.id)">上架</button>
+        </div>
+        <div v-else-if="product.available === '上架'">         
+            <button @click="goToUpdateProduct(product.id)">编辑</button><br/>
+            <button @click="deleteProduct(product.id)">删除</button><br/>
+            <button @click="PullOffDevice(product.id)">下架</button>
         </div>
       </li>
     </ul>
+
+    <!-- 没有商品时显示 <el-empty> -->
+    <el-empty v-else description="description" />
   </div>
 </template>
+
+
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -61,6 +74,29 @@ const deleteProduct = async (productId) => {
   }
 };
 
+const PutOnDevice = async (productId) => {
+  try {
+    await axios.post(`/api/device/PutOnDevice?id=${productId}`);
+    ElMessage.success('上架成功');
+    // 可选：删除后刷新产品数据
+    fetchProductData();
+  } catch (error) {
+    console.error('上架时出错:', error);
+    ElMessage.error('产品上架失败');
+  }
+};
+
+const PullOffDevice = async (productId) => {
+  try {
+    await axios.post(`/api/device/PullOffDevice?id=${productId}`);
+    ElMessage.success('下架成功');
+    // 可选：删除后刷新产品数据
+    fetchProductData();
+  } catch (error) {
+    console.error('下架时出错:', error);
+    ElMessage.error('下架失败');
+  }
+};
 
 onMounted(() => {
   fetchProductData();

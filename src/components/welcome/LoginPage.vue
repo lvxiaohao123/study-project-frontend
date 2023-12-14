@@ -75,7 +75,7 @@ const login = () => {
       ElMessage.success('登录成功');
     } else {
       // 登录失败
-      ElMessage.error('登录失败');
+      ElMessage.error('账号或密码错误');
       store.auth.user = null;
     }
   })

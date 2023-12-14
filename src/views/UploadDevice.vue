@@ -1,4 +1,5 @@
 <template>
+  <Header></Header>
   <div class="device-form-container">
     <h1>发布设备</h1>
     <form @submit.prevent="submitDevice">
@@ -13,12 +14,6 @@
 
       <label for="location">设备位置:</label>
       <input type="text" id="location" v-model="device.location" required>
-
-      <label for="available">设备可用性:</label>
-      <select id="available" v-model="device.available" required>
-        <option value="1">可用</option>
-        <option value="0">不可用</option>
-      </select>
 
       <label for="image">设备图片:</label>
       <input type="file" id="image" accept="image/*" @change="handleImageUpload" required>
@@ -41,7 +36,7 @@ const device = ref({
   description: '',
   price: null,
   location: '',
-  available: 1,
+  available: '上架',
   create_date: new Date(), // 初始化为当前日期
   id: store.auth.user.id
 });

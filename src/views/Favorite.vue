@@ -3,8 +3,11 @@
   <HomeSide></HomeSide>
   <div class="order-container">
     <h2><el-icon><CollectionTag /></el-icon>收藏夹</h2>
-    <ul class="order-list">
+
+    <!-- 当有收藏商品时渲染列表，否则显示 <el-empty> -->
+    <ul v-if="Fproducts.length > 0" class="order-list">
       <li v-for="Fproduct in Fproducts" :key="Fproduct.device_id.id" class="order-item">
+        <!-- 收藏商品的详细信息 -->
         <div class="order-image">
           <img :src="Fproduct.device_id.image_path" alt="Product Image">
         </div>
@@ -13,11 +16,16 @@
           <p class="description">{{ Fproduct.device_id.description.slice(0, 25) }}{{ Fproduct.device_id.description.length > 30 ? '...' : '' }}</p>
           <p>¥: {{ Fproduct.device_id.price }}</p>
         </div>
+
+        <!-- 删除按钮 -->
         <div>
           <button @click="deleteProduct(Fproduct)">删除</button>
-          </div>
+        </div>
       </li>
     </ul>
+
+    <!-- 没有收藏商品时显示 <el-empty> -->
+    <el-empty v-else description="description" />
   </div>
 </template>
 
