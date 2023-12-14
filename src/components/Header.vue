@@ -16,7 +16,7 @@
                 <router-link to="/">首页</router-link>
                 <router-link to="/Shop">商城</router-link>
                 <router-link to="/Forum">论坛</router-link>
-                <router-link to="/IDE">IDE设备</router-link>
+                <router-link to="/AEDmap">AED设备</router-link>
             </nav>
 
             <div class="avatar-container">

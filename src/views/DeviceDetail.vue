@@ -24,7 +24,7 @@
 
                 <!-- 添加条件渲染 -->
                 <template v-if="hasProduct(device.id) && device.available!='已售出'" >
-                  <button class="purchase-button" @click="goToUpdateProduct(device.id)">编辑</button>
+                  <button class="edit-button" @click="goToUpdateProduct(device.id)">编辑</button>
                 </template>
                 <template v-if="device.available!='已售出' && !hasProduct(device.id)">
                   <el-button @click="purchase" type="primary" class="purchase-button">购买</el-button>
@@ -145,8 +145,19 @@ const goToUpdateProduct = (productId) => {
   max-width: 800x; /* 设置信息框最大宽度，以便更好地控制它的宽度 */
 }
 
-.purchase-button {
+.edit-button {
   background-color: rgb(154, 150, 150); /* 设置按钮背景色为蓝色 */
+  color: #fff; /* 设置按钮文本颜色为白色 */
+  padding: 8px 16px; /* 添加内边距 */
+  margin: 10px;
+  border: none; /* 移除边框 */
+  cursor: pointer;
+  height: 40px;
+  border-radius: 4px; /* 圆角按钮 */
+}
+
+.purchase-button {
+  background-color: rgb(179, 4, 4); /* 设置按钮背景色为蓝色 */
   color: #fff; /* 设置按钮文本颜色为白色 */
   padding: 8px 16px; /* 添加内边距 */
   margin: 10px;

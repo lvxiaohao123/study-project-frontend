@@ -22,10 +22,11 @@
   </div>
 </template>
   
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import axios from 'axios';
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
 import router from '../router';
+import '../css/ShopView.css';
   
   const devices = ref([]);
   
@@ -54,67 +55,5 @@ import router from '../router';
   </script>
   
   <style scoped>
-  .product-page {
-    max-width: 1200px;
-    margin: 20px auto;
-  }
-  
-  .page-title {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .product-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(208px, 1fr));
-    gap: 20px;
-  }
-  
-  .product-card {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-  }
-  
-  .product-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .product-image img {
-    width: 180px;
-    height: 140px;
-    object-fit: cover;
-    border-bottom: 1px solid #e0e0e0;
-    margin-left: 20px;
-    margin-top: 20px;
-    object-fit: contain; 
-  }
-  
-  .product-details {
-    padding: 15px;
-  }
-  
-  .product-name {
-    font-size: 18px;
-    margin-bottom: 8px;
-  }
-  
-  .product-description {
-    color: #666;
-    margin-bottom: 12px;
-  }
-  
-  .product-price {
-    color: #e4393c;
-    margin-bottom: 8px;
-  }
-  
-  .product-location,
-  .product-status,
-  .product-date {
-    margin-bottom: 8px;
-    color: #999;
-  }
   </style>
   

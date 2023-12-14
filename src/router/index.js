@@ -75,6 +75,10 @@ const router = createRouter({
       path: '/SearchView/:searchStr',
       name: 'SearchView',
       component: () => import('@/views/SearchView.vue'),
+    },{
+      path: '/AEDmap',
+      name: 'AEDmap',
+      component: () => import('@/views/AEDmap.vue'),
     }
     ,{
       path: '/news/:id',
