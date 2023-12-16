@@ -93,18 +93,55 @@ const router = createRouter({
               path: "/user",
               name: "admin-user",
               component: () => import('@/admin/User.vue'),
+          },{
+            path: "/order",
+            name: "admin-order",
+            component: () => import('@/admin/OrderManage.vue'),
+        },{
+            path: "/newsManage",
+            name: "admin-newsManage",
+            component: () => import('@/admin/NewsManage.vue'),
+        },
+          {
+              path: "/post",
+              name: "admin-post",
+              component: () => import('@/admin/Forum/PostManage.vue'),
+          },{
+            path: "/reply",
+            name: "admin-reply",
+            component: () => import('@/admin/Forum/ReplyManage.vue'),
+        },
+          {
+              path: "/device",
+              name: "admin-device",
+              component: () => import('@/admin/DeviceManage.vue'),
           },
           {
-              path: "/articleList",
-              name: "admin-articleList",
-              component: () => import('@/admin/article/ArticleList.vue'),
+              path: "/UpdateDevice/:id",
+              name: "admin-UpdateDevice",
+              component: () => import('@/admin/update/UpdateDevice.vue'),
+          },{
+            path: "/UpdateNews/:id",
+            name: "admin-UpdateNews",
+            component: () => import('@/admin/update/UpdateNews.vue'),
+        },
+          {
+              path: "/UpdateUser/:id",
+              name: "admin-UpdateUser",
+              component: () => import('@/admin/update/UpdateUser.vue'),
           },
           {
-              path: "/test",
-              name: "admin-test",
-              component: () => import('@/admin/Test.vue'),
+              path: "/InsertUser",
+              name: "admin-InsertUser",
+              component: () => import('@/admin/insert/InsertUser.vue'),
+          },
+          {
+              path: "/InsertNews",
+              name: "admin-InsertNews",
+              component: () => import('@/admin/insert/InsertNews.vue'),
           }
       ],
+     
   }
     
   ]

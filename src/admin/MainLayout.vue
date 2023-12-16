@@ -143,19 +143,28 @@ export default {
         {
           title: "用户",
           index: "user",
+        },{
+          title: "设备",
+          index: "device",
         },
         {
-          title: "文章",
+          title: "论坛",
           subs: [
             {
-              title: "文章列表",
-              index: "articleList",
+              title: "主题帖",
+              index: "post",
+            },{
+              title: "评论",
+              index: "reply",
             },
           ],
         },
         {
-          title: "测试",
-          index: "test",
+          title: "订单",
+          index: "order",
+        },{
+          title: "新闻",
+          index: "newsManage",
         },
       ],
     };
@@ -218,7 +227,7 @@ export default {
       }
       //高亮和退到前一个路由
       this.activeTabName = routeIndex;
-      this.$router.push("/admin" + routeIndex);//注意
+      this.$router.push("" + routeIndex);//注意
       //删除当前关闭的路由标签
       this.editableTabs.splice(eleIndex, 1);
     },

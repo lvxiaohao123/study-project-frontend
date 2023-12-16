@@ -1,7 +1,7 @@
 <template>
-  <Hander></Hander>
   <div class="device-form-container">
-    <h1>发布设备</h1>
+    <h1>编辑设备</h1>
+    <img :src="`../../${device.image_path}`" alt="Product Image">
     <form @submit.prevent="submitDevice">
       <label for="name">设备名称:</label>
       <input type="text" id="name" v-model="device.name" required>
@@ -22,33 +22,38 @@
       </select>
 
       <label for="image">设备图片:</label>
+      <p>当前选图片路径: {{ device.image_path }}</p>
       <input type="file" id="image" accept="image/*" @change="handleImageUpload" required>
 
-      <button type="submit">发布设备</button>
+      <button type="submit">提交编辑</button>
     </form>
-  </div>
+    <button @click="goBack">返回</button>
+
+    </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { useStore } from '@/stores';
-import router from '../router';
+import { useRoute } from 'vue-router';
+import router from '../../router';
 
-const file=ref(null);
-const store = useStore();
+const file = ref(null);
+const route = useRoute();
 const device = ref({
   name: '',
   description: '',
   price: null,
   location: '',
   available: 1,
-  create_date: new Date(), // 初始化为当前日期
-  id: store.auth.user.id
+  create_date: new Date(),
+  id: route.params.id
 });
+
 const goBack = () => {
-    router.push('/Forum'); // 返回新闻列表页的路由
-  };
+  router.push('/device');
+};
+
 const handleImageUpload = (event) => {
   file.value = event.target.files[0];
 };
@@ -64,34 +69,35 @@ const submitDevice = async () => {
     formData.append('available', device.value.available);
     formData.append('create_date', device.value.create_date);
     formData.append('id', device.value.id);
+    formData.append('image_path', device.value.image_path);
 
     // 发送设备数据和图片文件到后端
-    await axios.post('/api/device/addDevice', formData);
-
-    // 清空表单
-    device.value = {
-      name: '',
-      description: '',
-      price: null,
-      location: '',
-      available: 1,
-      image_path: '',
-      create_date: new Date(),
-      id: store.auth.user.id
-    };
+    await axios.post(`/api/device/updateDevice`, formData);
 
     // 提示用户发布成功
-    alert('设备发布成功！');
-    router.push("/test");
+    alert('设备更新成功！');
+    router.push("/device");
   } catch (error) {
     console.error('Error publishing device:', error);
-    alert('设备发布失败！');
+    alert('设备编辑失败！');
   }
 };
+
+onMounted(async () => {
+  // 在组件挂载后可以进行一些初始化操作
+  try {
+    const response = await axios.get(`/api/device/findDeviceByID?id=${route.params.id}`);
+    const fetchedDevice = response.data; // Assuming the API response contains the device data
+    // 将获取到的设备数据填充到 device 对象中
+    Object.assign(device.value, fetchedDevice);
+  } catch (error) {
+    console.error('Error fetching device data:', error);
+  }
+});
 </script>
 
 <style scoped>
-.device-form-container {
+.news-form-container {
   max-width: 600px;
   margin: 0 auto;
   padding: 20px;
@@ -116,7 +122,15 @@ select {
   box-sizing: border-box;
 }
 
+img {
+  max-width: 100%; /* Ensure the image doesn't exceed the container width */
+  max-height: 400px; /* Set a maximum height for the image */
+  margin-bottom: 16px;
+}
+
 button {
+  margin-right: 50px;
+  margin-top: 50px;
   background-color: #007bff;
   color: #fff;
   padding: 10px 20px;
